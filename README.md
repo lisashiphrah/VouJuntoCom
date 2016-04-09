@@ -14,7 +14,7 @@ allowing only the user’s contacts to have access to the rides offered by him, 
 problem (when the users does not have the knowledge of who is in his car).
 </p>
 
-<p><i>Since this project was developer to a Brazilian University, all the pages were written in portuguese.</i><p/>
+<p><i>Since this project was developed to a Brazilian University, all the pages were written in portuguese.</i><p/>
 
 <h3>1. Technical Information</h3>
 <ul>
