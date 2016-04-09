@@ -37,8 +37,22 @@ problem (when the users does not have the knowledge of who is in his car).
 
 <h3>3. Application Screenshots</h3>
 
-<img scr="Screen1.png"/>
-<img scr="Screen2.png"/>
-<img scr="Screen3.png"/>
-<img scr="Screen4.png"/>
-<img scr="Screen5.png"/>
+<h5>3.1 Home Page</h5>
+<img src="Screen1.png"/>
+<br/>
+
+<h5>3.2 Ride Creation</h5>
+<img src="Screen2.png"/>
+<br/>
+
+<h5>3.3 Friends List</h5>
+<img src="Screen3.png"/>
+<br/>
+
+<h5>3.4 Accepting a Ride</h5>
+<img src="Screen4.png"/>
+<br/>
+
+<h5>3.5 User Home Page</h5>
+<img src="Screen5.png"/>
+<br/>
