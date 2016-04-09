@@ -1,0 +1,624 @@
+﻿/*                                          
+*   Folha de estilos gerais do projeto.    
+*   Autor: Cássia Zottis                    
+*/
+
+html
+{
+    overflow:scroll!important;
+}
+html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, pre, a, abbr, acronym, address, big, cite, code, del, dfn, em, font, img, ins, kbd, q, s, samp, small, strike, strong, sub, sup, tt, var, b, u, i, center, dl, dt, dd, ol, ul, li, fieldset, form, label, legend, table, caption, tbody, tfoot, thead, tr, th, td
+{
+    margin: 0px;
+    padding: 0px;
+    border: 0px;
+    outline: 0px;
+    font-size: 100%;
+    vertical-align: baseline;
+    background: transparent;
+}
+
+.articleDivider
+{
+    color: #666;
+    border: 1px solid #D5D2D2;
+    margin-top: 20px;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    border-radius: 5px;
+    background: white;
+}
+
+.fademe div
+{
+    position:absolute;
+    padding:10px;
+    top:35%;
+    left:35%;
+    width:350px;
+    height:135px;
+    background:#FFFFFF;
+    border-radius:4px;
+    border:3px solid #B8D30B;
+    cursor:default!important;
+}
+
+.stats_overview
+{
+    background: #F6F6F6;
+    border: 1px solid #CCC;
+    float: right;
+    width: 26%;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    border-radius: 5px;
+    padding:10px;
+    margin:10px;
+}
+
+.stats_overview div
+{
+    width: 50%;
+    float: left;
+}
+
+.obrigatorio
+{
+	color:Red;
+}
+
+footer
+{
+    clear:both;
+    left:0px;
+    bottom:0px;
+    height: 50px;
+    background: #292929;
+    width: 100%;
+    text-align:center;
+    color:#FFFFFF;
+    font-size:smaller;
+    margin-top:50px;
+}
+
+ul
+{
+    list-style:none;
+}
+
+a
+{
+    text-decoration:none;
+}
+
+body, a
+{
+    font-family: "Nobile", Arial;
+    font-weight: 300;
+    color: #333;
+}
+
+#top
+{
+    height: 60px;
+    background: #292929;
+    width: 100%;
+}
+
+.greenLine
+{
+    height: 5px;
+    background: #B8D30B;
+}
+
+.grayLine
+{
+    height: 1px;
+    width: 960px;
+    background: #d5d2d2;
+    margin-bottom:10px;
+    margin-top:10px;
+    margin-left:auto;
+    margin-right: auto;
+}
+
+.wrap
+{
+    width: 960px;
+    margin: 0 auto;
+}
+
+#content
+{
+     clear:both;
+     margin: 0 auto;
+     display: block;
+}
+
+.btnPadrao
+{
+    background: #78af31 url(../Images/bgButton.png) repeat-x;
+    font-size: 12px;
+    font-weight:bold;
+    border-radius: 3px;
+    color:#FFFFFF;
+    min-width:100px;
+    text-decoration:none;
+    text-align:center;
+    padding:7px;
+    display:inline-block;
+}
+
+.btnPadrao:hover
+{
+     background: #78af31 url(../Images/bgButtonHover.png) repeat-x;
+}
+
+#imgEcoSolution
+{
+    float:left;
+}
+
+#btnLogin
+{
+    float:right;
+    margin-top:17px;
+}
+
+#AplicationLogo
+{
+    float:left;
+    cursor:pointer;
+}
+
+.homeIcons li
+{
+    text-align:center;
+    float:left;
+    width:315px;
+}
+
+.homeIcons img
+{
+    margin-top:10px;
+    cursor:pointer;
+}
+
+
+.homeIcons
+{
+    clear:both;
+    width:940;
+    margin-left:auto;
+    margin-right:auto;
+    margin-top:20px;
+    margin-bottom:20px;
+    height:160px;
+}
+
+.fademe {
+  background: rgba(0, 0, 0, 0.6);
+  width: 100%;
+  height: 100%; 
+  z-index: 10;
+  top: 0; 
+  left: 0; 
+  position: fixed; 
+  cursor:pointer;
+}
+
+#banner
+{
+    height:400px;
+    background:url(../Images/frontBanner.jpg) no-repeat;
+    margin-bottom:20px;
+    margin-top:10px;
+}
+
+.title
+{
+    font-size:22px!important;
+    margin-left:20px!important;
+    margin-bottom:20px!important;
+    margin-top:20px!important;
+    display:block!important;
+}
+
+.secondTitle
+{
+    font-size:18px!important;
+    margin-bottom:20px!important;
+    display:block!important;
+}
+
+label, span
+{
+    font-size:small;
+}
+
+.tableAboutUs
+{
+    margin-top:30px;
+}
+
+.tableAboutUs .texto
+{
+    width:300px;
+    float:left;
+    margin-right:50px;
+}
+
+.tableAboutUs .img
+{
+    float:left;
+    width:100px;
+}
+
+.tableAboutUs img
+{
+    width:60px;
+}
+
+input[type="text"],input[type="password"]
+{
+    text-indent: 10px;
+    -webkit-box-shadow: inset 0 2px 2px #CCC, 0 0px 0;
+    color: #666666;
+    min-height: 35px;
+    border: 1px solid #BBB;
+    border-radius: 5px;
+    font-family: "Nobile", Arial;
+}
+
+textarea
+{
+    padding: 15px;
+    -webkit-box-shadow: inset 0 2px 2px #CCC, 0 0px 0;
+    color: #666666;
+    min-height: 35px;
+    border: 1px solid #BBB;
+    border-radius: 5px;
+    font-family: "Nobile", Arial;
+}
+
+.defaultInput
+{
+    width:350px;
+}
+
+.defaultMedium
+{
+    width:250px;
+}
+
+.formPadrao input, .formPadrao textarea
+{
+    margin-bottom:10px;
+}
+
+.formPadrao .inputBig
+{
+    width:60%;
+}
+
+.formPadrao label
+{
+    width:250px;
+    white-space:pre-wrap;
+    break-line:break-all;
+    text-align:left;
+    line-height:40px;
+}
+
+.floatLeft
+{
+    float:left;
+}
+
+.floatRight
+{
+    float:right;
+}
+
+form
+{
+    margin-top:20px;
+}
+
+.content
+{
+    padding:0 20px 20px 20px;
+    border: 1px solid #D5D2D2;
+    border-radius:5px;
+    margin-top:20px!important
+}
+
+select
+{
+    text-indent: 10px;
+    height: 25px;
+    min-width: 150px;
+}
+
+.errorField
+{
+	border: 1px solid #d72929!important;
+}
+
+.clearBoth
+{
+    clear:both!important;
+}
+
+.stats_overview p {
+    margin: 0;
+    padding: 0;
+    text-align: center;
+    text-transform: uppercase;
+    text-shadow: 0 1px 0 white;
+}
+
+.overview_titulo
+{
+    font-size: 12px;
+    font-weight: bold;
+    margin: 6px 0;
+    height:20px;
+}
+
+.overview_valor
+{
+    font-size: 20px;
+    font-weight: bold;
+    color: #333;
+    height:30px;
+}
+
+ul.tabs {
+    margin: 3px 10px 0 0;
+    padding: 0;
+    float: right;
+    list-style: none;
+    height: 24px;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    border-radius: 5px;
+    -webkit-box-shadow: 0 1px 0 white;
+    -moz-box-shadow: 0 1px 0 #fff;
+    box-shadow: 0 1px 0 white;
+    border: 1px solid #CCC;
+    font-weight: bold;
+    text-shadow: 0 1px 0 white;
+}
+
+html ul.tabs li:first-child, html ul.tabs li:first-child a {
+    -webkit-border-top-left-radius: 5px;
+    -webkit-border-bottom-left-radius: 5px;
+    -moz-border-radius-topleft: 5px;
+    -moz-border-radius-bottomleft: 5px;
+    border-top-left-radius: 5px;
+    border-bottom-left-radius: 5px;
+}
+
+html ul.tabs li.active, html ul.tabs li.active a:hover {
+    background: #F1F2F4;
+    -webkit-box-shadow: inset 0 2px 3px #818181;
+    -moz-box-shadow: inset 0 2px 3px #818181;
+    box-shadow: inset 0 2px 3px #818181;
+}
+
+html ul.tabs li.active a {
+    color: #44474F;
+}
+
+ul.tabs li {
+    float: left;
+    margin: 0;
+    padding: 0;
+    line-height: 24px;
+}
+
+ul.tabs li a {
+    text-decoration: none;
+    color: #999;
+    display: block;
+    padding: 0 10px;
+    height: 24px;
+}
+
+ul.tabs {
+    list-style: none;
+    font-weight: bold;
+    text-shadow: 0 1px 0 white;
+}
+
+.header {
+    height: 38px;
+    width: 100%;
+    background: #F1F1F4 url(../Images/secondary_bar.png) repeat-x;
+    -webkit-border-top-left-radius: 5px;
+    -webkit-border-top-right-radius: 5px;
+    -moz-border-radius-topleft: 5px;
+    -moz-border-radius-topright: 5px;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+}
+
+.header h3
+{
+    color: #1F1F20;
+    text-shadow: 0 1px 0 white;
+    font-size: 13px;
+    margin: 8px 20px;
+}
+
+.tabs a
+{
+    color: #1F1F20;
+    text-shadow: 0 1px 0 white;
+    font-size: 13px;
+    font-weight:bold;
+}
+
+.tabs a:hover
+{
+    color: #44474F;
+}
+
+
+.header h3 {
+    display: block;
+    float: left;
+}
+
+/************* MENSAGENS DE ERRO / SUCESSO / ALERTA **************/
+
+.messageErrorField {
+	border-radius: 5px;
+    background: #F3D9D9;
+    border: 1px solid #D20009;
+    color: #7B040F;
+    padding: 10px;
+    font-size: 12px;
+    text-align:center;
+    position:fixed;
+    top:100px;
+    left:830px;
+    max-width:250px;
+}
+
+.messageSuccess {
+    margin-bottom:10px;
+    width: 98%;
+    margin-top: 20px;
+    border-radius: 5px;
+    background: #E2F6C5;
+    border: 1px solid #79C20D;
+    color: #32510F;
+    padding: 10px;
+    font-size: 12px;
+    text-align:center;
+}
+
+.messageError {
+    margin-bottom:10px;
+    width: 98%;
+    margin-top: 20px;
+    border-radius: 5px;
+    background: #F3D9D9;
+    border: 1px solid #D20009;
+    color: #7B040F;
+    padding: 10px;
+    font-size: 12px;
+    text-align:center;
+}
+
+.messageWarning {
+    margin-bottom:10px;
+    width: 98%;
+    margin-top: 20px;
+    border-radius: 5px;
+    background: #F5F3BA ;
+    border: 1px solid #C7A20D;
+    color: #796616;
+    padding: 10px;
+    font-size: 12px;
+    text-align:center;
+}
+
+/********************** END MENSAGENS *******************/
+
+.width100
+{
+    width:100px!important;
+}
+
+/********************** TABLE SORTER *******************/
+
+.tablesorter {
+    width: 100%;
+    margin: -5px 0 0 0;
+    font-size: 13px;
+}
+
+.tablesorter thead tr {
+    height: 30px;
+    background: url(../Images/table_sorter_header.png) repeat-x;
+    text-align: left;
+    text-indent: 10px;
+    cursor: pointer;
+    color: #1F1F20;
+    text-shadow: 0 1px 0 white;
+    line-height:30px;
+}
+
+.tablesorter td, .tablesorter tr{
+    padding: 15px 10px;
+    padding:10px;
+    border-bottom: 1px dotted #CCC;
+}
+
+/********************** MENSAGENS *******************/
+
+.message_list {
+    height: 432px;
+    overflow-x: hidden;
+    overflow-y: scroll;
+    font-size:13px;
+}
+
+.module_content {
+    margin: 10px 20px;
+    color: #666;
+}
+
+.message {
+    border-bottom: 1px dotted #CCC;
+}
+
+.fieldsetDivisor {
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    border-radius: 5px;
+    background: #F6F6F6;
+    border: 1px solid #CCC;
+    padding: 10px;
+    margin: 10px 0;
+}
+
+.fieldsetDivisor label {
+    display: block;
+    float: left;
+    width: 200px;
+    height: 25px;
+    line-height: 25px;
+    text-shadow: 0 1px 0 white;
+    font-weight: bold;
+    padding-left: 10px;
+    margin: -5px 0 5px 0;
+}
+
+
+/******************* IMAGENS PERFIL ********************/
+.profilePictureBig
+{
+    border-radius: 10px;
+    width:180px;
+    margin-top: 20px;
+}
+
+.profileTitle
+{
+    font-size:26px;
+    display:block;
+    text-align:right;
+    clear:both;
+    font-weight:normal;
+}
+
+.subtitles
+{
+    display:block;
+    text-align:right;
+    clear:both;
+}

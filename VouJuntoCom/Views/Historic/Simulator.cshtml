@@ -1,0 +1,101 @@
+﻿@using VouJuntoCom.Models
+@model HistoricModel
+@{
+    ViewBag.Title = "Simulator";
+}
+
+<div id="content">
+    <div class="grayLine"></div>
+    <br />
+    <h3 class="profileTitle">Simulador</h3>
+    <form id="formSimulator" action="@Url.Action("Simulate")" method="get">
+        <label>
+            Simule o quanto suas caronas o ajudaram a economizar gasolina e renda preenchendo os campos abaixo:
+        </label>
+
+        <div>
+            <table id="tableHistoricGeral" style="display: inline-table; float: left; margin-top: 50px;">
+                <tr>
+                    <td>
+                        <label>Total Caronas Aceitas: </label>
+                    </td>
+                    <td>
+                        <b>@Model.ReceivedRides.Count()</b>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <label>Preço Pago: </label>
+                    </td>
+                    <td>
+                        <b>@String.Format("{0:C}", Model.TotalPaid)</b>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <label>Distância percorrida:</label>
+                    </td>
+                    <td>
+                        <b>@String.Format("{0:0.00}", Model.AcceptedDistance) Km</b>
+                    </td>
+                </tr>
+            </table>
+            <div class="verticalDivisor"></div>
+            <table style="display: inline-table; margin-top: 40px; float: left">
+                <tr>
+                    <td>
+                        <label>Preço da gasolina atual (R$): </label>
+                    </td>
+                    <td>
+                        <input type="text" id="gasolinaPreco" />
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <label>Km/l efetuado pelo veículo: </label>
+                    </td>
+                    <td>
+                        <input type="text" id="kmlitro" />
+                    </td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td><a onclick="Calcular()" href="javascript:void(0)" class="btnPadrao">CALCULAR</a> </td>
+                </tr>
+            </table>
+            <table id="tableSimuladorResult">
+                <tr>
+                    <td>
+                        <label>Valor gasto: </label>
+                    </td>
+                    <td>
+                        <b id="valueResult"></b>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <label>Litros gastos:</label>
+                    </td>
+                    <td>
+                        <b id="litrosResult"></b>
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </form>
+</div>
+
+<script>
+    function Calcular() {
+        var kmLitro = $('#kmlitro').val();
+        var gasolinaPreco = $('#gasolinaPreco').val().replace(',','.');
+        var distancia = '@Model.AcceptedDistance';
+        distancia = distancia.replace(',','.');
+
+        var result = (distancia / kmLitro) * gasolinaPreco;
+      
+        $('#valueResult').text('R$ ' + parseFloat(result).toFixed(2));
+        $('#litrosResult').text((distancia / kmLitro).toFixed(2) + ' litros');
+        $('#tableSimuladorResult').css('display', 'inline-table');
+    }
+</script>

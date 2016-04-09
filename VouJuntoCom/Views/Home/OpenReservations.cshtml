@@ -1,0 +1,72 @@
+﻿@using VouJuntoCom.DAO
+@model List<RidesRequest>
+@{
+    ViewBag.Title = "OpenReservations";
+    Layout = Url.Content("~/Views/Shared/_NullLayout.cshtml");
+}
+
+<style>
+    #listSolicitacoes
+    {
+        margin: 10px;
+    }
+</style>
+<div id="content" style="overflow: auto; height: 200px;">
+    <div class="header">
+        <h3>Novas Notificações</h3>
+    </div>
+    <ul id="listSolicitacoes">
+        @if ((Model == null) || (Model.Count == 0))
+        {  
+            <li>
+                <label><b>Não há solicitações de reserva.</b></label>
+            </li>
+        }
+        else
+        {
+            foreach (var request in Model)
+            {
+                var userID = request.UserID;
+                var ride = RidesManager.RetrieveRide(request.RideID);
+                <li id="@userID" style="border-bottom:1px dotted #a5a6a8">
+                    <div style="width: 300px; display: inline-block;">
+                        <img src = "@Url.Action("GetImage", "Home", new { userID })" style="width:100px; float:left; margin-right:10px;"/>
+                            <label><b>@UserManager.RetrieveNameById(userID)</b> deseja efetuar uma reserva para:</label><br />
+                            <label>@ride.ToPlace</label> <br />
+                            <label>Valor: R$ @ride.Price</label> <br />
+                    </div>
+                    <div style="display: inline-block; text-align: right; width:250px;">
+                        <a href="javascript:void(0)" onclick="AcceptReservation('@userID', '@request.RideID')" class="btnPadrao">ACEITAR</a>
+                        <a href="javascript:void(0)" onclick="RejectReservation('@userID', '@request.RideID')" class="btnCancel">REJEITAR</a>
+                    </div>
+                </li>
+            }
+        }
+    </ul>
+
+</div>
+<script>
+    function AcceptReservation(userID, rideID) {
+        $.ajax({
+            url: "@Url.Action("AcceptReservation", "Home")",
+            type: "POST",
+            data: { userID: userID, rideID: rideID }
+        }).done(function () {
+            $('#' + userID).fadeOut(400, function () {
+                $(this).remove();
+            });
+        });
+    }
+
+    function RejectReservation(userID, rideID) {
+        $.ajax({
+            url: "@Url.Action("RejectReservation", "Home")",
+            type: "POST",
+            data: { userID: userID, rideID: rideID }
+        }).done(function () {
+            $('#' + userID).fadeOut(400, function () {
+                $(this).remove();
+            });
+        });
+    }
+</script>

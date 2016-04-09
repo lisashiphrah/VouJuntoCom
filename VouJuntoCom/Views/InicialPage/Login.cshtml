@@ -1,0 +1,68 @@
+﻿@using VouJuntoCom.Helpers
+@{
+    ViewBag.Title = "Login";
+    var display = "display:none;";
+    var classMessage = "messageError";
+    
+    var resultEnum = EnumUtils.ValueOf(ViewBag.ErrorMessage);
+    if (ViewBag.ErrorMessage == ErrorEnum.InvalidUsername)
+    {
+        display = "display:block;";
+    }
+   
+ }
+
+<div id="content" class="content">
+
+    <label class="title">Login</label>
+    <div id="resultDiv" style="@display" class="@classMessage">@resultEnum</div>  
+    <label>Caso possua um usuário cadastrado, efetue seu login no sistema abaixo.</label>
+    <form method="post" action="@Url.Content("~/InicialPage/Login")" class="formPadrao">
+       <ul style="display:inline-table;float: left;">
+            <li>
+                <label>Usuário:</label>
+            </li>
+            <li>
+                 <input type="text" name="username" id="txtUsername" class="defaultInput"/>
+            </li>
+            <li>
+                <label>Senha:</label>
+            </li>
+            <li>
+                <input type="password" name="password" id="txtPassword" class="defaultInput"/>
+            </li>
+           <li style="text-align:right;">
+                <a onclick="LoginApplication()" href="javascript:void(0)" class="btnPadrao">ENVIAR</a>
+            </li>
+        </ul>
+        <ul style="display:inline-table; margin-left: 140px;">
+            <img src="../../Content/Images/comoehbom.png"/>
+        </ul>
+        <ul style="width:350px; border-top:1px solid #D5D2D2;">
+            <li>
+                <br />
+                <span>Não pertence ainda ao nosso sistema? Clique abaixo para se cadastrar.</span>
+            </li>
+            <li style="text-align:right;">
+                <a href="@Url.Content("~/InicialPage/NewUser")" class="btnPadrao">CADASTRAR-SE</a>
+            </li>
+        </ul>
+    </form>
+</div>
+
+<script>
+    function LoginApplication() {
+        var username = $('#txtUsername').val();
+        var password = $('#txtPassword').val();
+        if (username.length > 0 && password.length > 0) {
+            $('#txtUsername').removeClass('errorField');
+            $('#txtPassword').removeClass('errorField');
+            document.forms[0].submit();
+        }
+        else {
+            alert('É necessário preencher todos os campos.');
+            $('#txtUsername').addClass('errorField');
+            $('#txtPassword').addClass('errorField');
+        }
+    }
+</script>

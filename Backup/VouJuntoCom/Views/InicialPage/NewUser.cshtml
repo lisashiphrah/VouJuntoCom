@@ -1,0 +1,178 @@
+﻿@using VouJuntoCom.Models
+@using VouJuntoCom.DAO
+@model VouJuntoCom.Models.UserModel
+@{
+    ViewBag.Title = "NewUser";
+}
+<div id="content">
+    <form class="formPadrao" action="@Url.Action("CreateUser")" method="post">
+    <div class="content">
+        <label class="title">Cadastre-se</label>
+        <label>Efetue seu registro preenchendo as informações abaixo.</label><br />
+		<label>Os campos assinalados com <span class="obrigatorio">*</span> são de preenchimento obrigatório.</label>
+        
+		<label class="secondTitle">Dados Pessoais</label>
+        <ul>
+            <li>
+                @Html.LabelFor(user => user.FullName) <span class="obrigatorio">*</span>: </li>
+            <li>
+                @Html.TextBoxFor((user => user.FullName), new { @class = "inputBig required", @MaxLength = "255" })
+            </li>
+            <li>
+                @Html.LabelFor(user => user.Username) <span class="obrigatorio">*</span>: </li>
+            <li>
+                @Html.TextBoxFor((user => user.Username), new { @class = "defaultMedium required", @MaxLength = "50" })
+            </li>
+            <li>
+                <table>
+                    <tr>
+                        <td style="width: 290px">@Html.LabelFor(user => user.Password) <span class="obrigatorio">*</span>:
+                        </td>
+                        <td style="width: 290px">
+                            <label>Confirmação de Senha <span class="obrigatorio">*</span>:</label>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>@Html.PasswordFor((user => user.Password), new { @class = "defaultMedium required", @MaxLength = "12" })
+                        </td>
+                        <td>
+                            <input type="password" id="passwordConfirmation" class="defaultMedium required" maxlength="12"/>
+                        </td>
+                        <td>
+                            <div id="passVerification" style="margin-top: 0px;">
+                            </div>
+                        </td>
+                    </tr>
+                </table>
+            </li>
+            <li>
+                @Html.LabelFor(user => user.Birth) <span class="obrigatorio">*</span>: </li>
+            <li>
+                @Html.TextBoxFor((user => user.Birth), new { @class="required date"})
+            </li>
+            <li>
+                <table>
+                    <tr>
+                        <td style="width: 290px">@Html.LabelFor(user => user.CPF) <span class="obrigatorio">*</span>:
+                        </td>
+                        <td style="width: 290px">@Html.LabelFor(user => user.RG) <span class="obrigatorio">*</span>:
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>@Html.TextBoxFor((user => user.CPF), new { @class="required"})
+                        </td>
+                        <td>@Html.TextBoxFor((user => user.RG), new { @class="required"})
+                        </td>
+                    </tr>
+                </table>
+            </li>
+            <li>
+                <table>
+                    <tr>
+                        <td style="width: 290px">@Html.LabelFor(user => user.Email) <span class="obrigatorio">*</span>:
+                        </td>
+                        <td style="width: 290px">@Html.LabelFor(user => user.Sex) <span class="obrigatorio">*</span>:
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>@Html.TextBoxFor((user => user.Email), new { @class = "defaultMedium required email", @MaxLength = "255" })
+                        </td>
+                        <td>
+                            @Html.RadioButtonFor(user => user.Sex, "Feminino", new { id = "radioFeminino", @checked = true })
+                            <label for="radioFeminino">Feminino</label>
+                            @Html.RadioButtonFor(user => user.Sex, "Masculino", new { id = "radioMasculino" })
+                            <label for="radioMasculino">Masculino</label>
+                        </td>
+                    </tr>
+                </table>
+            </li>
+            <li>
+                @Html.CheckBoxFor(user => user.Notifications)
+                <label for="Notifications">Desejo receber notificações de caronas e convites de amigos por email.</label>
+            </li>
+        </ul>
+    </div>
+    <div class="content">
+        <label class="secondTitle">Dados Bancários</label>
+        <ul>
+            <li>
+                <label>Selecione sua instituição bancária <span class="obrigatorio">*</span>:</label>
+            </li>
+            <li>
+               <select style="width: 290px" name="UserBankModel.Name" id="selectedBanks">
+                    @foreach (var banco in BanksDB.RetrieveAllBanks())
+					{
+                        <option value="@banco.ID">@banco.Nome</option>
+					}
+                </select>
+                @Html.HiddenFor(user => user.BankAccount.BankID)
+            </li>
+            <li>
+                <table>
+                    <tr>
+                        <td style="width: 290px">
+                            @Html.LabelFor(user => user.BankAccount.Agency) <span class="obrigatorio">*</span>:
+                        </td>
+                        <td style="width: 290px">
+                            @Html.LabelFor(user => user.BankAccount.Account) <span class="obrigatorio">*</span>:
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            @Html.TextBoxFor((user => user.BankAccount.Agency), new { @class="required", @MaxLength = "10" })
+                        </td>
+                        <td>
+                            @Html.TextBoxFor((user => user.BankAccount.Account), new { @class = "required", @MaxLength = "10" })
+                        </td>
+                    </tr>
+                </table>
+            </li>
+			<li style="text-align:right">
+				<a onclick="SubmitCreateUser()" href="javascript:void(0)" class="btnPadrao">ENVIAR</a>
+			</li>
+        </ul>
+    </div>
+    </form>
+</div>
+<script type="text/javascript">
+
+    function SubmitCreateUser() {
+        $('#BankAccount_BankID').attr('value', $('#selectedBanks').val());
+        GeneralSubmitCreateUser();
+    }
+
+	$(document).ready(function () {
+		$('#Birth').mask('99/99/9999');
+
+		// Verifica força da senha
+		$("#Password").keyup(function () {
+			var strength = 0;
+			if (this.value.length < 6) {
+				cleanMessages();
+				$('#passVerification').html('Necessário no mínimo 6 caracteres.');
+				$('#passVerification').addClass('messageError');
+			}
+			else {
+				cleanMessages();
+				if (this.value.match(/[a-z]+/)) {
+					strength++;
+				}
+				if (this.value.match(/[0-9]+/)) {
+					strength++;
+				}
+				if (this.value.match(/[A-Z]+/)) {
+					strength++;
+				}
+				if (strength < 2) {
+					$('#passVerification').html('Cuidado, senha média.');
+					$('#passVerification').addClass('messageWarning');
+				}
+				else {
+					$('#passVerification').html('Senha forte.');
+					$('#passVerification').addClass('messageSuccess');
+				}
+			}
+		});
+	});
+   
+</script>

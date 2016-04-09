@@ -1,0 +1,140 @@
+﻿@using VouJuntoCom.Models
+@using VouJuntoCom.DAO
+@model List<RidesModel>
+@{
+    ViewBag.Title = "ViewRides";
+    var listOfRequests = RidesRequestManager.GetAllRequestedByUser(new Guid(User.Identity.Name));
+    var listAccepted = RidesManager.GetReceiverRides((new Guid(User.Identity.Name)));
+}
+
+<div id="content">
+
+    <div class="content" style="padding: 0px;">
+        <form action="@Url.Action("ViewRidesFilter")" method="get" id="formViewRidesFilter">
+            <div id="divFiltro" style="border-right: 1px solid #D5D2D2; max-width: 250px; padding: 10px; float: left;">
+                <label style="font-size: 12px;"><b>Filtre suas caronas selecionando as datas desejadas:</b></label>
+                <br />
+                <br />
+                <label>Data Inicial:</label><br />
+                <input type="text" id="txtDataInicial" name="txtDataInicial" class="date required" /><br />
+                <label>Data Final:</label><br />
+                <input type="text" id="txtDataFinal" name="txtDataFinal" class="date required" />
+                <br />
+                <br />
+                <div style="text-align: right">
+                    <a href="javascript:void(0)" onclick="ViewRidesFilter()" class="btnPadrao">PESQUISAR</a>
+                </div>
+            </div>
+        </form>
+        <div id="divSugestoes">
+            <form action="@Url.Action("GetInfoRide")" method="get" id="formGetInfoRide">
+                <label><b>Encontre sua carona abaixo!</b></label>
+                <br />
+                <br />
+                @if ((Model == null) || (Model.Count == 0))
+                {
+                    <label>Não foram encontradas caronas para o filtro selecionado.</label>
+                }
+                else
+                {
+                    foreach (var ride in Model)
+                    {
+                        var userID = ride.DonorID;
+                    <div class="friend divRide" id="@ride.ID">
+                        <img src = "@Url.Action("GetImage", "Home", new { userID })"/>
+                        <table style="width: 570px">
+                            <tr>
+                                <td colspan="5" class="rideTitle">
+                                    <label class="rideTitle">
+                                        <b>@ride.DonorName</b> está indo para
+                                        <b class="ridePlace">@ride.ToPlace.ToUpper()</b>
+                                    </label>
+                                    <br />
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <label>Saída:</label>
+                                </td>
+                                <td>
+                                    <label>@ride.TimeFrom</label>
+                                </td>
+                                @{
+                        foreach (var element in listOfRequests)
+                        {
+                            if ((element.RideID == ride.ID) && (element.UserID == new Guid(User.Identity.Name)))
+                            {
+                                    <td style="text-align: right; float: right;">
+                                        <a href="javascript:void(0)" style="color: #36BB27!important">
+                                            <img src="@Url.Content("~/Content/Images/icn_alert_success.png")"/>
+                                            Reserva Efetuada</a>
+                                    </td>
+                                break;
+                            }
+                        }
+                        foreach (var element in listAccepted)
+                        {
+                            if (element.ID == ride.ID)
+                            {
+                                    <td style="text-align: right; float: right;">
+                                        <a href="javascript:void(0)" style="color: #36BB27!important">
+                                            <img src="@Url.Content("~/Content/Images/icn_alert_success.png")"/>
+                                            Carona Aceita</a>
+                                    </td>
+                                break;
+                            }
+                        }
+                                }
+                            </tr>
+                            <tr>
+                                <td>
+                                    <label>Local:</label>
+                                </td>
+                                <td>
+                                    <label>@ride.FromPlace</label>
+                                </td>
+                                <td style="padding-left: 30px">
+                                    <label class="ridePlace"><b>Preço: </b></label>
+                                </td>
+                                <td>
+                                    <label class="ridePlace"><b>R$ @ride.Price</b></label>
+                                </td>
+                                <td style="text-align: right; float: right">
+                                    <a href="javascript:void(0)" onclick="GetInfoRide('@ride.ID')">
+                                        <img src="@Url.Content("~/Content/Images/plus.png")"/>
+                                        Mais Informações</a>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>              
+                    }
+                }
+                <input type="hidden" name="selectedRide" id="selectedRide" />
+            </form>
+        </div>
+        <div class="clearBoth"></div>
+    </div>
+</div>
+
+<script>
+    $(document).ready(function () {
+        $('#txtDataInicial').mask('99/99/9999');
+        $('#txtDataFinal').mask('99/99/9999');
+    });
+
+    function GetInfoRide(rideID) {
+        $('#selectedRide').val(rideID);
+        $('#formGetInfoRide').submit();
+    }
+
+    function ViewRidesFilter() {
+        if (($('#txtDataInicial').val().length != 0) && ($('#txtDataFinal').val().length != 0)) {
+            $('#formViewRidesFilter').submit();
+        }
+        else {
+            ShowErrorDialog('É necessário especificar uma data inicial e final para filtragem.');
+        }
+    }
+
+</script>
+

@@ -1,0 +1,173 @@
+﻿@using VouJuntoCom.Models
+@model List<CarModel>
+@{
+    Layout = Url.Content("~/Views/Shared/_NullLayout.cshtml");
+}
+
+<div id="content" style="overflow: auto; height: 200px;">
+    <div class="header">
+        <h3>Gerenciar Veículos</h3>
+    </div>
+    <div>
+        <table class="tablesorter" cellspacing="0" id="tableVeiculos" style="border-bottom: 1px dotted #CECECE">
+            <thead>
+                <tr>
+                    <th style="width: 110px;">Marca</th>
+                    <th style="width: 110px;">Modelo</th>
+                    <th style="width: 110px;">Cor</th>
+                    <th style="width: 110px;">RENAVAM</th>
+                    <th style="width: 110px;">Últimos Dígitos</th>
+                    <th style="width: 120px;">Ar Condicionado</th>
+                    <th style="width: 70px;">Rádio</th>
+                    <th style="width: 75px;">Fumantes</th>
+                    <th style="width: 60px;">Animais</th>
+                    <th style="width: 60px;">Opções</th>
+                </tr>
+            </thead>
+            <tbody>
+                @if (Model.Count == 0)
+                {
+                    <tr>
+                        <td colspan="9">Você não possui veículos cadastrados.</td>
+                    </tr>
+                }
+                else
+                {
+                    foreach (CarModel car in Model)
+                    {
+                    <tr id="@car.ID" class="paddingVehicle">
+                        <td>
+                            @Html.TextBoxFor((model => car.Make), new { @class = "inputDisabled required", @MaxLength = "100", @name = "Make", @id = "Make" })
+                        </td>
+                        <td>
+                            @Html.TextBoxFor((model => car.Modelo), new { @class = "inputDisabled required", @MaxLength = "100", @name = "Modelo", @id = "Modelo" })
+                        </td>
+                        <td>
+                            @Html.TextBoxFor((model => car.Color), new { @class = "inputDisabled required", @MaxLength = "30", @name = "Color", @id = "Color" })
+                        </td>
+                        <td>
+                            @Html.TextBoxFor((model => car.RENAVAM), new { @class = "inputDisabled required numbers", @MaxLength = "9", @name = "RENAVAM", @id = "RENAVAM" })
+                        </td>
+                        <td>
+                            @Html.TextBoxFor((model => car.Digits), new { @class = "inputDisabled numbers", @MaxLength = "2", @name = "Digits", @id = "Digits" })
+                        </td>
+                        <td>
+                            @Html.CheckBoxFor(model => car.ArConditioning, new { id = "ArConditioning" })
+                        </td>
+                        <td>
+                            @Html.CheckBoxFor(model => car.Radio, new { id = "Radio" })
+                        </td>
+                        <td>
+                            @Html.CheckBoxFor(model => car.Smoke, new { id = "Smoke" })
+                        </td>
+                        <td>
+                            @Html.CheckBoxFor(model => car.Pet, new { id = "Pet" })
+                        </td>
+                        <td style="text-align: center">
+                            <img src="@Url.Content("~/Content/Images/icn_alert_success.png")" class="imgSave"
+                                    style="display:none; cursor:pointer" onclick="Save('@car.ID')" alt="Salvar Alterações" title="Salvar Alterações"/>
+
+                            <img src="@Url.Content("~/Content/Images/icn_edit.png")" class="imgEdit"
+                                    style="cursor:pointer" onclick="EnableChanges('@car.ID')" alt="Editar Veículo" title="Editar Veículo"/>
+
+                            <img src="@Url.Content("~/Content/Images/icn_cancel.png")" class="imgRemove"
+                                    style="cursor:pointer" onclick="Remove('@car.ID')" alt="Remover Veículo" title="Remover Veículo"/>
+                        </td>
+                    </tr>
+                    }
+                }
+            </tbody>
+        </table>
+    </div>
+    <div style="text-align: right; margin-top: 20px; margin-right: 20px;">
+        <a href="javascript:void(0)" onclick="NewCar()" class="btnPadrao">NOVO</a>
+    </div>
+</div>
+
+<script>
+
+    $(document).ready(function () {
+        $('input').each(function () {
+            $(this).attr('disabled', true);
+        });
+    });
+
+    function NewCar() {
+        /// <summary>Em AJAX, abre janela de cadastro de um novo veículo.</summary>
+        $.ajax({
+            type: "GET",
+            url: "@Url.Action("NewCar", "Cars")"
+        }).done(function (data) {
+            OpenPopup(400, 800, data);
+        });
+    }
+
+    function Save(carID) {
+        /// <summary>Salva as modificações efetuadas na tabela.</summary>
+        /// <param name="tr_ID">ID da tabela / carro</param>
+        var validate = ValidateFields();
+        if (validate) {
+            var carToEdit =
+                {
+                    Make: $('#' + carID + ' #Make').val(),
+                    ID: carID,
+                    Modelo: $('#' + carID + ' #Modelo').val(),
+                    Color: $('#' + carID + ' #Color').val(),
+                    RENAVAM: $('#' + carID + ' #RENAVAM').val(),
+                    Digits: $('#' + carID + ' #Digits').val(),
+                    ArConditioning: $('#' + carID + ' #ArConditioning').attr('checked')?true:false,
+                    Radio: $('#' + carID + ' #Radio').attr('checked')?true:false,
+                    Smoke: $('#' + carID + ' #Smoke').attr('checked')?true:false,
+                    Pet: $('#' + carID + ' #Pet').attr('checked') ? true : false
+                };
+
+            $.ajax({
+                url: "@Url.Action("EditCar", "Cars")",
+                type: "POST",
+                data: JSON.stringify({ model: carToEdit }),
+                contentType: 'application/json'
+            }).done(function (data) {
+                if ((data == 'True') || (data === 'True') || (data == true) || (data === true)) {
+                    alert('Editado com sucesso.');
+                    DisableChanges(carID);
+                }
+                else {
+                    ShowErrorDialog('Problemas na alteração dos dados. Por favor, tente novamente.');
+                }
+            });
+
+            }
+            else {
+                ShowErrorDialog('Há campos obrigatórios não preenchidos.');
+            }
+        }
+
+        function Remove(carID) {
+            var confirmacao = confirm("Deseja remover este veículo?");
+            if (confirmacao) {
+                /// <summary>Em AJAX, remove o carro com determinado ID. Verifica se foi removido com sucesso. Caso
+                /// seja e não houver mais nenhum outro veículo cadastrado, insere mensagem de 'Você não possui veículos cadastrados.
+                /// Se não foi removido com sucesso, apresenta popup com erro e não remove veículo da lista. </summary>
+                /// <param name="tr_ID">ID da tabela / carro</param>
+
+                $.ajax({
+                    type: "POST",
+                    url: "@Url.Action("RemoveCar")",
+                    data: { carID: carID }
+                }).done(function (data) {
+                    if ((data == 'True') || (data === 'True') || (data == true) || (data === true)) {
+                        $('#' + carID + '').remove();
+                        var rowCount = $('#tableVeiculos tr').length;
+                        if (rowCount == 1) { //só tiver o header
+                            var message = '<tr><td colspan="9">Você não possui veículos cadastrados.</td></tr>';
+                            $('#tableVeiculos').append(message);
+                        }
+                    }
+                    else {
+                        ShowErrorDialog("Não foi possível efetuar a remoção. Por favor, tente novamente.");
+                    }
+                });
+            }
+        }
+
+</script>

@@ -1,0 +1,213 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>
+    </ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{AE5A0A99-6E82-4D56-BE69-85A3A45DCADE}</ProjectGuid>
+    <ProjectTypeGuids>{E53F8FEA-EAE0-44A6-8774-FFD645390401};{349c5851-65df-11da-9384-00065b846f21};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>VouJuntoCom</RootNamespace>
+    <AssemblyName>VouJuntoCom</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <MvcBuildViews>false</MvcBuildViews>
+    <UseIISExpress>false</UseIISExpress>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="EntityFramework">
+      <HintPath>..\packages\EntityFramework.4.1.10331.0\lib\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data.Entity" />
+    <Reference Include="System.Data.SqlServerCe, Version=4.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91" />
+    <Reference Include="System.Web.Mvc, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
+    <Reference Include="System.Web.WebPages, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
+    <Reference Include="System.Web.Helpers, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Web.DynamicData" />
+    <Reference Include="System.Web.Entity" />
+    <Reference Include="System.Web.ApplicationServices" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Web.Extensions" />
+    <Reference Include="System.Web.Abstractions" />
+    <Reference Include="System.Web.Routing" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Web.Services" />
+    <Reference Include="System.EnterpriseServices" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\InicialPageController.cs" />
+    <Compile Include="DAO\Banks.cs" />
+    <Compile Include="DAO\Car.cs" />
+    <Compile Include="DAO\UserBank.cs" />
+    <Compile Include="Helpers\Converter.cs" />
+    <Compile Include="Helpers\DBConfigurations.cs" />
+    <Compile Include="DAO\User.cs" />
+    <Compile Include="Global.asax.cs">
+      <DependentUpon>Global.asax</DependentUpon>
+    </Compile>
+    <Compile Include="Helpers\Security.cs" />
+    <Compile Include="Models\UserBankModel.cs" />
+    <Compile Include="Models\CarModel.cs" />
+    <Compile Include="Models\UserModel.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="App_Data\VouJunto_Database.ldf">
+      <DependentUpon>VouJunto_Database.mdf</DependentUpon>
+    </Content>
+    <Content Include="App_Data\VouJunto_Database.mdf" />
+    <Content Include="App_Data\VouJunto_Database_log.ldf">
+      <DependentUpon>VouJunto_Database.mdf</DependentUpon>
+    </Content>
+    <Content Include="Content\Images\background.jpg" />
+    <Content Include="Content\Images\frontBanner.jpg" />
+    <Content Include="Content\Images\icn_add_user.png" />
+    <Content Include="Content\Images\icn_alert_error.png" />
+    <Content Include="Content\Images\icn_alert_info.png" />
+    <Content Include="Content\Images\icn_alert_success.png" />
+    <Content Include="Content\Images\icn_alert_warning.png" />
+    <Content Include="Content\Images\icn_cancel.png" />
+    <Content Include="Content\Images\icn_categories.png" />
+    <Content Include="Content\Images\icn_edit.png" />
+    <Content Include="Content\Images\icn_folder.png" />
+    <Content Include="Content\Images\icn_jump_back.png" />
+    <Content Include="Content\Images\icn_logout.png" />
+    <Content Include="Content\Images\icn_new_article.png" />
+    <Content Include="Content\Images\icn_photo.png" />
+    <Content Include="Content\Images\icn_profile.png" />
+    <Content Include="Content\Images\icn_search.png" />
+    <Content Include="Content\Images\icn_security.png" />
+    <Content Include="Content\Images\icn_settings.png" />
+    <Content Include="Content\Images\icn_tags.png" />
+    <Content Include="Content\Images\icn_trash.png" />
+    <Content Include="Content\Images\icn_user.png" />
+    <Content Include="Content\Images\icn_video.png" />
+    <Content Include="Content\Images\icn_view_users.png" />
+    <Content Include="Content\Images\module_footer_bg.png" />
+    <Content Include="Content\Images\monkey.jpg" />
+    <Content Include="Content\Images\post_message.png" />
+    <Content Include="Content\Images\secondary_bar.png" />
+    <Content Include="Content\Images\secondary_bar_shadow.png" />
+    <Content Include="Content\Images\sidebar.png" />
+    <Content Include="Content\Images\sidebar_divider.png" />
+    <Content Include="Content\Images\sidebar_shadow.png" />
+    <Content Include="Content\Images\skype.png" />
+    <Content Include="Content\Images\gmail.png" />
+    <Content Include="Content\Images\facebook.png" />
+    <Content Include="Content\Images\linkedin.png" />
+    <Content Include="Content\Images\brasilIcon.png" />
+    <Content Include="Content\Images\faceIcon.png" />
+    <Content Include="Content\Images\caronaIcon.png" />
+    <Content Include="Content\Images\AplicationLogo.png" />
+    <Content Include="Content\Images\bg.png" />
+    <Content Include="Content\Images\bgButton.png" />
+    <Content Include="Content\Images\bgButtonHover.png" />
+    <Content Include="Content\Images\dolarIcon.png" />
+    <Content Include="Content\Images\EcoSolution.png" />
+    <Content Include="Content\Images\mail.png" />
+    <Content Include="Content\Images\mapasIcon.png" />
+    <Content Include="Content\Images\meioAmbienteIcon.png" />
+    <Content Include="Content\Images\mundoIcon.png" />
+    <Content Include="Content\Images\table_sorter_header.png" />
+    <Content Include="Content\Styles\Menu.css" />
+    <Content Include="Global.asax" />
+    <Content Include="Scripts\general.js" />
+    <Content Include="Scripts\jquery-1.7.2.min.js" />
+    <Content Include="Scripts\masked-input-plugin.js" />
+    <Content Include="Web.config" />
+    <Content Include="Web.Debug.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </Content>
+    <Content Include="Web.Release.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </Content>
+    <Content Include="Content\Styles\Site.css" />
+    <Content Include="Views\_ViewStart.cshtml" />
+    <Content Include="Views\InicialPage\Index.cshtml" />
+    <Content Include="Views\Shared\_Layout.cshtml" />
+    <Content Include="Views\Web.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Shared\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\InicialPage\AboutUs.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\InicialPage\Contact.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\InicialPage\NewUser.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Home\Index.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Shared\_MenuLogout.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Shared\_MenuLogin.cshtml" />
+  </ItemGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target> -->
+  <Target Name="MvcBuildViews" AfterTargets="AfterBuild" Condition="'$(MvcBuildViews)'=='true'">
+    <AspNetCompiler VirtualPath="temp" PhysicalPath="$(WebProjectOutputDir)" />
+  </Target>
+  <ProjectExtensions>
+    <VisualStudio>
+      <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
+        <WebProjectProperties>
+          <UseIIS>False</UseIIS>
+          <AutoAssignPort>True</AutoAssignPort>
+          <DevelopmentServerPort>52143</DevelopmentServerPort>
+          <DevelopmentServerVPath>/</DevelopmentServerVPath>
+          <IISUrl>
+          </IISUrl>
+          <NTLMAuthentication>False</NTLMAuthentication>
+          <UseCustomServer>False</UseCustomServer>
+          <CustomServerUrl>
+          </CustomServerUrl>
+          <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
+        </WebProjectProperties>
+      </FlavorProperties>
+    </VisualStudio>
+  </ProjectExtensions>
+</Project>

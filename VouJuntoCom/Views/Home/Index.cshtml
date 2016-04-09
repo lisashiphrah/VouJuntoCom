@@ -1,0 +1,325 @@
+﻿@model VouJuntoCom.Models.UserModel
+@{
+    ViewBag.Title = "Index";
+    string userID = Model.ID.ToString();
+}
+<script type="text/javascript" src="@Url.Content("~/Scripts/share.js")"></script>
+
+<div id="content">
+    <div class="grayLine"></div>
+
+    <!-- Profile Picture -->
+    <h3 class="profileTitle">Bem vindo(a), @Model.FullName!</h3>
+    <label class="subtitles">Você possui atualmente @Model.Points pontos.</label>
+    <article id="Article_Picture" style="width: 190px; float: left; text-align: right;">
+
+        <img class="profilePictureBig" style="width:190px; height:190px;" src = "@Url.Action("GetImage", "Home", new { userID })" />
+
+        <div class="clearBoth"></div>
+    </article>
+
+    <!-- Notificações -->
+    <article id="Article_Notifications">
+        <ul>
+            <li style="height: 25px;">
+                <img  src="@Url.Content("~/Content/Images/message.png")"  alt="Nova mensagem" title="Nova mensagem"/>
+                <label>0 Novas mensagens</label>
+            </li>
+            <li onclick="OpenFriendsSolicitations('@Model.ID')" style="height:25px;padding:3px;">
+                <img alt="Solicitações de amizade" title="Solicitações de amizade" src="@Url.Content("~/Content/Images/icn_add_user.png")"/>
+                <label style="line-height: 30px;">@Model.FriendsRequests.Count Novas solicitações de amizade</label>
+            </li>
+            <li onclick="OpenNotifications('@Model.ID')" style="height:25px;padding:3px;">
+                <img src="@Url.Content("~/Content/Images/icn_tags.png")" alt="Novas notificações" title="Novas notificações"/>
+                <label>@Model.ListNotifications.Count Novas notificações</label>
+            </li>
+            <li onclick="OpenReservations('@Model.ID')" style="height:25px;padding:3px;">
+                <img src="@Url.Content("~/Content/Images/car.png")" alt="Reservas em Aberto" title="Reservas em Aberto" style="width:14px;"/>
+                <label>@Model.RidesRequests.Count Reservas em Aberto</label>
+            </li>
+        </ul>
+    </article>
+
+    <!-- Calendar -->
+    <article id="Article_Calendar" class="calendar" style="float: right;">
+        <div id="Calendar"></div>
+        <div id="CalendarCaronas"><b>Não existem caronas para o dia selecionado.</b></div>
+    </article>
+
+    <!-- Caronas do usuário -->
+    <article class="articleDivider " id="Section_Caronas" style="clear: both; margin-bottom: 10px;">
+        <div class="header">
+            <h3>Caronas</h3>
+            <ul class="tabs">
+                <li id="liOferecidas" class="active" style="">
+                    <a href="javascript:void(0);" onclick="OpenOferecidas()">Oferecidas</a>
+                </li>
+                <li id="liAceitas">
+                    <a href="javascript:void(0);" onclick="OpenAceitas()">Aceitas</a>
+                </li>
+            </ul>
+        </div>
+        <table class="tablesorter CursorHand" cellspacing="0" id="tableOferecidas">
+            <thead>
+                <tr>
+                    <th>Data de Saída</th>
+                    <th>Local Saída</th>
+                    <th>Local Chegada</th>
+                    <th>Confirmados</th>
+                    <th style="width:145px"></th>
+                </tr>
+            </thead>
+            <tbody>
+                @if (Model.DonorRides.Count() == 0)
+                {
+                    <tr>
+                        <td colspan="5">Você ainda não ofereceu nenhuma carona.</td>
+                    </tr>
+                }
+                else
+                {
+                    foreach (var ride in Model.DonorRides)
+                    {
+                        var left = ride.Seats - ride.RemainingSeats;
+                        var url = "http://localhost:1428/Rides/GetInfoRide?selectedRide=" + ride.ID;
+                        string selectedRide = ride.ID.ToString();
+                    <tr onclick="window.location.href = '@Url.Action("GetInfoRide", "Rides", new { selectedRide })'">
+                        <td>@ride.TimeFrom</td>
+                        <td>@ride.FromPlace</td>
+                        <td>@ride.ToPlace</td>
+                        <td>@left</td>
+                        <td>
+                             <a href="http://www.addthis.com/bookmark.php"
+                                class="addthis_button"
+                                addthis:url="@url"
+                                addthis:title="VouJunto.com"
+                                addthis:description="VouJunto.com - Compartilhe caronas com seus amigos!"></a>
+                        </td>
+                    </tr>
+                    }
+                }
+            </tbody>
+        </table>
+        <table class="tablesorter CursorHand" cellspacing="0" id="tableAceitas" style="display: none">
+            <thead>
+                <tr>
+                    <th>Motorista</th>
+                    <th>Data de Saída</th>
+                    <th>Local Saída</th>
+                    <th>Local Chegada</th>
+                    <th style="width:145px"></th>
+                </tr>
+            </thead>
+            <tbody>
+                @if (Model.ReceiverRides.Count() == 0)
+                {
+                    <tr>
+                        <td colspan="5">Você ainda não aceitou nenhuma carona.</td>
+                    </tr>
+                }
+                else
+                {
+                    foreach (var ride in Model.ReceiverRides)
+                    {
+                        var url = "http://localhost:1428/Rides/GetInfoRide?selectedRide=" + ride.ID;
+                        string selectedRide = ride.ID.ToString();
+                        
+                    <tr onclick="window.location.href = '@Url.Action("GetInfoRide", "Rides", new { selectedRide })'">
+                        <td>@ride.DonorName</td>
+                        <td>@ride.TimeFrom</td>
+                        <td>@ride.FromPlace</td>
+                        <td>@ride.ToPlace</td>
+                        <td>
+                             <a href="http://www.addthis.com/bookmark.php"
+                                class="addthis_button"
+                                addthis:url="@url"
+                                addthis:title="VouJunto.com"
+                                addthis:description="VouJunto.com - Compartilhe caronas com seus amigos!"></a>
+                        </td>
+                    </tr>
+                    }
+                }
+            </tbody>
+        </table>
+        <div class="clearBoth"></div>
+    </article>
+
+    <!-- Mensagens -->
+    <article class="articleDivider" id="Section_TodasMensagens" style="width: 350px; float: left;">
+        <div class="header">
+            <h3>Mensagens</h3>
+            <ul class="tabs">
+                <li id="liRecebidas" class="active" style="">
+                    <a href="javascript:void(0);" onclick="OpenRecebidas()">Recebidas</a>
+                </li>
+                <li id="liEnviadas">
+                    <a href="javascript:void(0);" onclick="OpenEnviadas()">Enviadas</a>
+                </li>
+            </ul>
+        </div>
+        <div class="message_list" id="message_received">
+            <div class="module_content" style="margin: 0px; cursor: pointer;">
+                @if (Model.MessagesToMe.Count == 0)
+                {
+                    <div class="message" style="padding: 5px;">
+                        <p>Você ainda não recebeu nenhuma mensagem.</p>
+                    </div>
+                }
+                else
+                {
+                    foreach (var message in Model.MessagesToMe)
+                    {
+                        if (message.New)
+                        {
+                    <div class="message messageNotReaded" id="@message.ID" style="padding: 5px;" onclick="LoadMessage('@message.SenderName','@message.Message', '@message.ID')">
+                        <p style="margin-bottom: 10px; margin-top: 10px;">
+                            <strong>@message.SenderName - @message.SendedDate</strong>
+                            @*<input type="image" src="@Url.Content("~/Content/Images/icn_trash.png")"
+                                    onclick=" ApagarMensagem('@message.ID')" title="Apagar" style="float:right;"/>*@
+                            <input type="image" onclick="SendMessage('@message.SenderID    ')"  src="@Url.Content("~/Content/Images/icn_jump_back.png")" title="Responder" style="float:right;"/>
+                        </p>
+                    </div>
+                        }
+                        else
+                        {
+                    <div class="message" style="padding: 5px;" id="@message.ID" onclick="LoadMessage('@message.SenderName','@message.Message')">
+                        <p style="margin-bottom: 10px; margin-top: 10px;">
+                            <strong>@message.SenderName - @message.SendedDate</strong>
+                            @*<input type="image" src="@Url.Content("~/Content/Images/icn_trash.png")"
+                                    onclick=" ApagarMensagem('@message.ID')" title="Apagar" style="float:right;"/>*@
+                            <input type="image" onclick="SendMessage('@message.SenderID    ')" src="@Url.Content("~/Content/Images/icn_jump_back.png")" title="Responder" style="float:right;"/>
+                        </p>
+                    </div>
+                        }
+                    }
+                }
+            </div>
+        </div>
+        <div class="message_list" id="message_sended" style="display: none">
+            <div class="module_content" style="margin: 0px; cursor: pointer;">
+                @if (Model.MessagesFromMe.Count == 0)
+                {
+                    <div class="message" style="padding: 5px;">
+                        <p>Você ainda não enviou nenhuma mensagem.</p>
+                    </div>
+                }
+                else
+                {
+                    foreach (var message in Model.MessagesFromMe)
+                    {
+                    <div class="message" id="@message.ID" style="padding: 5px;" onclick="LoadMessage('@message.ReceiverName','@message.Message')">
+                        <p style="margin-bottom: 10px; margin-top: 10px;">
+                            <strong>@message.ReceiverName - @message.SendedDate</strong>
+                            @*<input type="image" src="@Url.Content("~/Content/Images/icn_trash.png")"
+                                    onclick=" ApagarMensagem('@message.ID')" title="Apagar" style="float:right;"/>*@
+                        </p>
+                    </div>
+                    }
+                }
+            </div>
+        </div>
+    </article>
+
+    <!-- Nova Mensagem -->
+    <article class="articleDivider" id="Section_NovasMensagens" style="width: 600px; float: right;">
+        <div class="header">
+            <h3>Mensagem</h3>
+        </div>
+        <div class="module_content">
+            <fieldset class="fieldsetDivisor" style="width: 98%">
+                <input style="width: 550px;" disabled="disabled" id="inputDestinatário" type="text" />
+            </fieldset>
+            <fieldset class="fieldsetDivisor" style="width: 98%">
+                <label>Conteúdo</label>
+                <textarea rows="12" cols="83" id="txtMessage" disabled="disabled"></textarea>
+            </fieldset>
+            <div class="clear"></div>
+        </div>
+    </article>
+</div>
+<script>
+    $(document).ready(function () {
+        $("#Calendar").datepicker({
+            inline: true
+        });
+    });
+
+    function OpenReservations(id)
+    {
+        $.ajax({
+            url: "@Url.Action("OpenReservations", "Home")",
+            type: "GET",
+            data: { userID: id }
+        }).done(function (data) {
+            OpenPopup(200, 610, data);
+        });
+        }
+
+        function OpenFriendsSolicitations(id) {
+            $.ajax({
+                url: "@Url.Action("OpenFriendsSolicitations", "Home")",
+            type: "GET",
+            data: { userID: id }
+        }).done(function (data) {
+            OpenPopup(200, 610, data);
+        });
+    }
+
+    function OpenNotifications(id) {
+        $.ajax({
+            url: "@Url.Action("OpenNotifications", "Home")",
+                type: "GET",
+                data: { userID: id }
+            }).done(function (data) {
+                OpenPopup(200, 610, data);
+            });
+        }
+
+        function OpenReceivers() {
+            $.ajax({
+                url: "@Url.Action("OpenReceivers", "Home")",
+                type: "GET"
+            }).done(function (data) {
+                OpenPopup(200, 1000, data);
+            });
+        }
+
+        function SendMessage(userID) {
+            $.ajax({
+                url: "@Url.Action("NewMessage", "Home")",
+                type: "GET",
+                data: { userID: userID }
+            }).done(function (data) {
+                OpenPopup(500, 600, data);
+            });
+        }
+
+        function LoadMessage(senderName, message, messageID)
+        {
+            $('#inputDestinatário').val(senderName);
+            $('#txtMessage').val(message);
+
+            if(messageID != null && messageID != undefined)
+            {
+                $.ajax({
+                    url: "@Url.Action("MarkAsRead", "Home")",
+                type: "GET",
+                data: { messageID: messageID }
+            }).done(function () {
+                $('#'+ messageID).removeClass('messageNotReaded');
+            });
+        }
+    }
+
+    function ApagarMensagem(messageID)
+    {
+        $.ajax({
+            url: "@Url.Action("RemoveMessage", "Home")",
+            type: "GET",
+            data: { messageID: messageID }
+        }).done(function () {
+            $('#'+ messageID).remove();
+        });
+    }
+
+</script>

@@ -1,0 +1,13 @@
+﻿@{
+	Layout = null;
+}
+<link href="@Url.Content("~/Content/Styles/Menu.css")" rel="stylesheet" type="text/css">
+
+<nav id="menu">
+    <ul>
+        <li><a href="@Url.Action("Index", "InicialPage")">Home</a></li>
+        <li><a href="@Url.Action("NewUser", "InicialPage")">Cadastre-se</a></li>
+        <li><a href="@Url.Action("AboutUs", "InicialPage")">Sobre Nós</a></li>
+        <li><a href="@Url.Action("Contact", "InicialPage")">Contato</a></li>
+    </ul>
+</nav>

@@ -1,0 +1,48 @@
+﻿@using VouJuntoCom.Models
+@model UserModel
+@{
+    ViewBag.Title = "NewMessage";
+    Layout = Url.Content("~/Views/Shared/_NullLayout.cshtml");
+}
+
+<style>
+    #listSolicitacoes
+    {
+        margin: 10px;
+    }
+</style>
+<div id="content" style="overflow: auto; height: 500px;">
+    <form action="@Url.Action("SendMessage", "Home")" method="post" id="formMessage">
+        <div class="header">
+            <h3>Nova Mensagem</h3>
+        </div>
+        <fieldset class="fieldsetDivisor" style="width: 96%">
+            <label>Destinatário:</label>
+            <label>@Model.FullName</label>
+            @Html.HiddenFor(user => Model.FullName)
+            @Html.HiddenFor(user => Model.ID)
+        </fieldset>
+        <fieldset class="fieldsetDivisor" style="width: 96%">
+            <label>Conteúdo</label>
+            <textarea rows="12" cols="83" id="message" name="message"></textarea>
+        </fieldset>
+        <div style="text-align: right;">
+            <a href="javascript:void(0)" class="btnPadrao" onclick="SendMessage()">ENVIAR</a>
+        </div>
+    </form>
+</div>
+<script>
+    //string ID, string FullName, string message)
+    function SendMessage() {
+        $.ajax({
+            url: "@Url.Action("SendMessage", "Home")",
+            type: "POST",
+            data: { ID: $('#ID').val(), FullName: $('#FullName').val(), message: $('#message').val() }
+        }).done(function () {
+            alert('Mensagem Enviada');
+            $('#darkBackground').hide();
+            $('#popupWindow').hide();
+        });
+    }
+
+</script>

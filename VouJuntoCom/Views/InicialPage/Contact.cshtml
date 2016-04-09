@@ -1,0 +1,77 @@
+﻿@{
+    ViewBag.Title = "Contact";
+    var result = ViewData["result"];
+    var display = "display:none;";
+    var classMessage = "messageSuccess";
+    if(result == "Enviado")
+    {
+        display = "display:visibile;";
+    }
+    else if(result == "Erro")
+    {
+        display = "display:visibile;";
+        classMessage = "messageError";
+    }
+}
+
+<div id="content" class="content">
+
+    <label class="title">Contato</label>
+
+    <div id="resultDiv" style="@display" class="@classMessage">@ViewData["message"]</div>
+    <label>
+        Dúvidas, opiniões ou reclamações? Seu recado é muito importante para nós. Retornaremos seu contato assim que possível.
+    </label>
+
+   <form method="post" action="@Url.Content("~/InicialPage/SendEmail")" class="formPadrao">
+       <ul style="display:inline-table;">
+            <li>
+                <label>Nome:</label>
+            </li>
+            <li>
+                <input type="text" placeholder="Nome Sobrenome" class="defaultInput" name="nome" id="nome"/>
+            </li>
+            <li>
+                <label>Email:</label>
+            </li>
+            <li>
+                <input type="text" placeholder="nome@email.com.br" class="defaultInput" name="email" id="email"/>
+            </li>
+            <li >
+                <label>Telefone:</label>
+            </li>
+             <li>
+                <input type="text" placeholder="(99) 9999-9999" class="defaultInput" name="telefone" id="telefone"/>
+            </li>
+        </ul>
+        <ul style="display:inline-table; margin-left: 140px;">
+            <li>
+                <label>Mensagem:</label>
+            </li>
+            <li>
+                <textarea class="defaultInput" rows="11" id="areaMensagem"></textarea>
+                <input type="hidden" id="mensagem" name="mensagem" />
+            </li>
+            <li>
+                <a onclick="SubmitEmail()" href="javascript:void(0)" class="btnPadrao floatLeft">ENVIAR</a>
+            </li>
+        </ul>   
+    </form>
+</div>
+
+<script>
+    function SubmitEmail() {
+        var nome = $('#nome').val();
+        var email = $('#email').val();
+        var telefone = $('#telefone').val();
+        var mensagem = $('#areaMensagem').val();
+
+        if ((nome != '') && (email != '') && (mensagem = !'')) {
+            $('#mensagem').val($('#areaMensagem').val());
+            document.forms[0].submit();
+        }
+        else{
+            alert('É necessário preencher todos os campos.');
+        }
+    }
+</script>

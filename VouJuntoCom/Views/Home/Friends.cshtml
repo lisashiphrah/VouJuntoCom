@@ -1,0 +1,81 @@
+﻿@using VouJuntoCom.Models
+@model Dictionary<UserModel, bool>
+@{
+    ViewBag.Title = "Friends";
+}
+
+<div id="content">
+    <div class="content" style="padding: 0px;">
+        <div id="divSugestoes" style="width: 870px">
+            @if ((Model == null) || (Model.Count == 0))
+            {
+                <label>Você não possui ainda nenhum contato no seu círculo de amizades.</label>
+            }
+            else
+            {
+                foreach (var user in Model.Keys)
+                {
+                    bool accepted = Model[user];
+                    var userID = user.ID.ToString();
+                    if (accepted)
+                    {
+                        <div class="friend" id="@user.ID">
+                            <img src = "@Url.Action("GetImage", "Home", new { userID })"/>
+                            <div>
+                                <a onclick="OpenProfile('@user.ID')">@user.FullName</a><br />
+                                <label>@user.City</label><br />
+                                <a href="javascript:void(0)" onclick="RemoveFriend('@user.ID')">
+                                    <img src="@Url.Content("~/Content/Images/icn_alert_error.png")"/>
+                                    Remover</a><br />
+                                <a href="javascript:void(0)" onclick="SendMessage('@user.ID')">
+                                    <img src="@Url.Content("~/Content/Images/message.png")" style="width:15px;"/>
+                                    Mensagem</a>
+                            </div>
+                        </div>    
+                    }
+                    else
+                    {
+                        <div class="friend" style="opacity: 0.3">
+                            <img src = "@Url.Action("GetImage", "Home", new { userID })"/>
+                            <div>
+                                <label>@user.FullName</label><br />
+                                <label>Aguardando confirmação.</label><br />
+                            </div>
+                        </div>    
+                    }
+                }
+            }
+        </div>
+        <div class="clearBoth"></div>
+    </div>
+</div>
+<script>
+    function RemoveFriend(id) {
+        if (confirm('Você tem certeza que deseja excluir esta pessoa do seu círculo de amizades?')) {
+            $.ajax({
+                url: "@Url.Action("RemoveFriend", "Home")",
+                type: "POST",
+                data: { friendID: id }
+            }).done(function (data) {
+                if (data == true || data === true || data == 'True') {
+                    $('#' + id + '').css('opacity', 0.3);
+                    $('#' + id + ' a').remove();
+                }
+                else {
+                    alert('Problemas na remoção do contato convite.');
+                }
+            });
+        }
+    }
+
+    function SendMessage(userID) {
+        $.ajax({
+            url: "@Url.Action("NewMessage", "Home")",
+            type: "GET",
+            data: { userID: userID }
+        }).done(function (data) {
+            OpenPopup(500, 600, data);
+        });
+    }
+
+</script>

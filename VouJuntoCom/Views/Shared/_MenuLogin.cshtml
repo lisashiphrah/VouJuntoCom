@@ -1,0 +1,61 @@
+﻿@{
+    Layout = null;	
+}
+<link href="@Url.Content("~/Content/Styles/Menu.css")" rel="stylesheet" type="text/css">
+<ul class="menu">
+    <li>
+        <a href="@Url.Action("Index", "Home")">Meu Perfil</a>
+        <ul class="submenu">
+            <li><a href="@Url.Action("Index", "Home")">Minha Página</a></li>
+            <li><a href="javascript:void(0)" onclick="ManageVehicles()">Gerenciar Veículos</a></li>
+            <li><a href="@Url.Action("EditUser", "Home")">Editar Informações</a></li>
+        </ul>
+    </li>
+    <li>
+        <a href="@Url.Action("MyFriends", "Home")">Amigos</a>
+        <ul class="submenu">
+            <li><a href="@Url.Action("FindFriends", "Home")">Adicionar Amigos</a></li>
+            <li><a href="@Url.Action("MyFriends", "Home")">Meus Amigos</a></li>
+        </ul>
+    </li>
+    <li>
+        <a href="@Url.Action("ViewRides", "Rides")">Caronas</a>
+        <ul class="submenu">
+            <li><a href="@Url.Action("ViewRides", "Rides")">Ache sua Carona</a></li>
+            <li><a href="@Url.Action("CreateRide", "Rides")">Criar Nova Carona</a></li>
+            <li><a href="@Url.Action("ManageRides", "Rides")">Gerenciar Caronas</a></li>
+        </ul>
+    </li>
+    <li>
+        <a href="@Url.Action("Index", "Historic")">Histórico</a>
+        <ul class="submenu">
+            <li><a href="@Url.Action("Index", "Historic")">Histórico Geral</a></li>
+            <li><a href="@Url.Action("Simulator", "Historic")">Simulador</a></li>
+        </ul>
+    </li>
+    <li>
+        <a href="@Url.Action("NewUser", "Home")">Configurações</a>
+        <ul class="submenu">
+            <li>
+                <a href="javascript:void(0)" onclick="DeleteAccount()">Excluir Conta</a>
+            </li>
+        </ul>
+    </li>
+</ul>
+
+<script>
+    function ManageVehicles() {
+        $.ajax({
+            type: "GET",
+            url: "@Url.Action("List", "Cars")"
+        }).done(function (data) {
+            OpenPopup(200, 1000, data);
+        });
+    }
+
+    function DeleteAccount() {
+        if (confirm("Você tem certeza que deseja de descadastrar do sistema?")) {
+            $('#removeAccount').submit();
+        }
+    }
+</script>

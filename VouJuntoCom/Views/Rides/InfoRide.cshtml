@@ -1,0 +1,283 @@
+﻿@using VouJuntoCom.Models
+@using VouJuntoCom.Helpers
+@using VouJuntoCom.DAO
+@model RidesModel
+@{
+    ViewBag.Title = "ViewRides";
+    ErrorEnum error;
+    var userModel = UserManager.RetrieveUser(new Guid(User.Identity.Name), out error);
+    var isRequested = RidesRequestManager.IsRideRequested(new Guid(User.Identity.Name), Model.ID);
+    var isAccepted = RidesManager.IsRideAccepted(new Guid(User.Identity.Name), Model.ID);
+    var visibilityController = "visible";
+
+    //Se carona já passou, desabilita botões
+    if (Model.TimeFrom < DateTime.Now)
+    {
+        visibilityController = "hidden";
+    }
+}
+<script type="text/javascript" src="https://maps.google.com/maps/api/js?sensor=false&language=pt-br"></script>
+<div id="content" class="content">
+    <form action="@Url.Action("AcceptRide")" method="post" id="formInfoRide">
+        @Html.HiddenFor(ride => ride.ID)
+        @Html.HiddenFor(ride => ride.DonorID)
+        <label class="secondTitle" style="margin-top: 20px;">Informações</label>
+        <div id="creationForm">
+            <table id="tableViewCarona">
+                <tr>
+                    <td>
+                        <label><b>Origem: </b></label>
+                    </td>
+                    <td style="padding-right: 10px;">
+                        <label>@Model.FromPlace</label>
+                    </td>
+                    <td>
+                        <label><b>Data e Hora de Saída: </b></label>
+                    </td>
+                    <td>
+                        <label>@Model.TimeFrom</label>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <label><b>Destino: </b></label>
+                    </td>
+                    <td style="padding-right: 10px;">
+                        <label>@Model.ToPlace</label>
+                    </td>
+                    <td style="padding-right: 10px;">
+                        <label><b>Data e Hora de Chegada: </b></label>
+                    </td>
+                    <td>
+                        <label><b>Veículo: </b></label>
+                    </td>
+                    <td>
+                        <label>@Model.Car.Make - @Model.Car.Modelo</label>
+                    </td>
+                </tr>
+                <tr>
+                    <td style="padding-right: 10px;">
+                        <label><b>Porta-malas:</b></label>
+                    </td>
+                    <td>
+                        <label>@Model.TrunkSize litros</label>
+                    </td>
+                    <td>
+                        <label><b>Lugares Disponíveis: </b></label>
+                    </td>
+                    <td>
+                        <label>@Model.RemainingSeats</label>
+                    </td>
+                    <td></td>
+                    <td>
+                        @if (@Model.Car.Digits.HasValue)
+                        {
+                            <label>@Model.Car.Color - Últimos Dígitos: @Model.Car.Digits</label>
+                        }
+                        else
+                        {
+                            <label>@Model.Car.Color - Últimos Dígitos: Não informado.</label>
+                        }
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <label><b>Descrição: </b></label>
+                    </td>
+                    <td colspan="4">
+                        <label>@Model.Message</label>
+                    </td>
+                    <td class="tdImages">
+                        @if (@Model.Car.ArConditioning)
+                        {
+                            <img src="@Url.Content("~/Content/Images/air.png")" alt="Veículo com ar condicionado" title="Veículo com ar condicionado"/>
+                        }
+                        else
+                        {
+                            <img src="@Url.Content("~/Content/Images/noAir.png")" alt="Veículo sem ar condicionado" title="Veículo sem ar condicionado"/>
+                        }
+
+                        @if (@Model.Car.Pet)
+                        {
+                            <img src="@Url.Content("~/Content/Images/pets.png")" alt="É permitido animais no veículo" title="É permitido animais no veículo"/>
+                        }
+                        else
+                        {
+                            <img src="@Url.Content("~/Content/Images/noPets.png")" alt="Não é permitido animais no veículo" title="Não é permitido animais no veículo"/>
+                        }
+
+                        @if (@Model.Car.Smoke)
+                        {
+                            <img src="@Url.Content("~/Content/Images/smoking.png")" alt="É permitido fumar no veículo" title="É permitido fumar no veículo"/>
+                        }
+                        else
+                        {
+                            <img src="@Url.Content("~/Content/Images/noSmoking.png")" alt="Não é permitido fumar no veículo" title="Não é permitido fumar no veículo"/>
+                        }
+
+                        @if (@Model.Car.Radio)
+                        {
+                            <img src="@Url.Content("~/Content/Images/music.png")" alt="Veículo com rádio" title="Veículo com rádio"/>
+                        }
+                        else
+                        {
+                            <img src="@Url.Content("~/Content/Images/noMusic.png")" alt="Veículo sem rádio" title="Veículo sem rádio"/>
+                        }
+                    </td>
+                </tr>
+            </table>
+        </div>
+        <div id="map_div">
+            <div id="map_canvas"></div>
+            <div class="Price" style="display: inline-table; width: 160px; float: right;">
+                <label>Preço desta carona:</label><br />
+                <label>R$ @Model.Price</label>
+            </div>
+
+            <div id="divBotoes" style="visibility:@visibilityController">
+                @if (isRequested == true)
+                {
+                    <div style="text-align: right;">
+                        <a onclick="CancelRequest()" href="javascript:void(0)" class="btnCancel">CANCELAR RESERVA</a>
+                    </div>
+                }
+                else if (isAccepted == true)
+                {
+                    <div style="text-align: right;">
+                        <a onclick="EditPagamento()" href="javascript:void(0)" class="btnPadrao">EDITAR PAGAMENTO</a>
+                        <a onclick="CancelRide()" href="javascript:void(0)" class="btnCancel">CANCELAR CARONA</a>
+                    </div>
+                }
+                else if (Model.DonorID != userModel.ID)
+                {
+                    <div style="text-align: right;">
+                        <a onclick="AcceptRide()" href="javascript:void(0)" class="btnPadrao">SOLICITAR RESERVA</a>
+                    </div>
+                }
+                else
+                {
+                    <div style="text-align: right;">
+                        <a onclick="CancelDonorRide()" href="javascript:void(0)" class="btnCancel">CANCELAR CARONA</a>
+                    </div>
+                }
+            </div>
+        </div>
+    </form>
+</div>
+
+<script type="text/javascript">
+
+    function AcceptRide() {
+        if (confirm("Você tem certeza que deseja solicitar a reserva desta reserva?")) {
+            $.ajax({
+                url: "@Url.Action("RequestRide", "Rides")",
+                type: "POST",
+                data: { driverID: $('#DonorID').val(), rideID: $('#ID').val() }
+            }).done(function (data) {
+                alert(data);
+                window.location.href = "@Url.Action("ManageRides", "Rides")";
+            });
+        }
+    }
+
+    function CancelDonorRide() {
+        if (confirm("Você tem certeza que não deseja cancelar esta carona?")) {
+            $.ajax({
+                url: "@Url.Action("CancelDonorRide", "Rides")",
+                type: "POST",
+                data: { rideID: $('#ID').val() }
+            }).done(function () {
+                alert("Você cancelou esta carona.");
+                window.location.href = "@Url.Action("ManageRides", "Rides")";
+            });
+        }
+    }
+
+    function CancelRide() {
+        if (confirm("Você tem certeza que não deseja mais participar desta carona?")) {
+            $.ajax({
+                url: "@Url.Action("CancelRidePresence", "Home")",
+                type: "POST",
+                data: { rideID: $('#ID').val() }
+            }).done(function () {
+                alert("Você não pertence mais a lista de participantes desta carona.");
+                window.location.href = "@Url.Action("ManageRides", "Rides")";
+            });
+        }
+    }
+
+    function CancelRequest() {
+        if (confirm("Você tem certeza que deseja cancelar essa reserva?")) {
+            $.ajax({
+                url: "@Url.Action("CancelRequest", "Rides")",
+                type: "POST",
+                data: { driverID: $('#DonorID').val(), rideID: $('#ID').val() }
+            }).done(function (data) {
+                alert(data);
+                window.location.href = "@Url.Action("ManageRides", "Rides")";
+            });
+        }
+    }
+
+    var poly;
+    var map;
+    @{
+        var init = Model.Direction.Path.ElementAt(0);
+        var end = Model.Direction.Path.ElementAt(@Model.Direction.Path.Count - 1);
+    }
+
+    $(document).ready(function () {
+        var initPlace = new google.maps.LatLng('@init.Lat', '@init.Long');
+        var endPlace = new google.maps.LatLng('@end.Lat', '@end.Long');
+        var myOptions = {
+            mapTypeId: google.maps.MapTypeId.ROADMAP,
+            center: initPlace,
+            zoom: 13,
+            panControl: false,
+            zoomControl: false,
+            scaleControl: false,
+            streetViewControl: false,
+            overviewMapControl: false
+        };
+
+        map = new google.maps.Map(document.getElementById('map_canvas'), myOptions);
+
+        var polyOptions = {
+            strokeOpacity: 1.0,
+            strokeWeight: 3
+        }
+
+        var polyPaths = new Array();
+        var iterator = 0;
+        @foreach (var point in Model.Direction.Path)
+        {
+            <text>
+        var newElement = new google.maps.LatLng('@point.Lat', '@point.Long');
+        polyPaths[iterator] = newElement;
+        iterator++;
+            </text>
+        }
+
+        poly = new google.maps.Polyline({
+            path: polyPaths,
+            strokeColor: '#1d0898',
+            strokeOpacity: 0.7,
+            strokeWeight: 3
+        });
+
+        var markerInit = new google.maps.Marker({
+            position: initPlace,
+            title: '@Model.FromPlace'
+        });
+
+        var markerEnd = new google.maps.Marker({
+            position: endPlace,
+            title: '@Model.ToPlace'
+        });
+
+        markerInit.setMap(map);
+        markerEnd.setMap(map);
+        poly.setMap(map);
+    });
+
+</script>

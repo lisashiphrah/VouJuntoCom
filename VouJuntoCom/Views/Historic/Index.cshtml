@@ -1,0 +1,201 @@
+﻿@using VouJuntoCom.Models
+@using VouJuntoCom.Helpers
+@model HistoricModel
+@{
+    ViewBag.Title = "Index";
+    var total = Model.DrivedDistance + Model.AcceptedDistance;
+    var ano = @TempData["Ano"];
+}
+
+<script type="text/javascript" src="../../Scripts/flot/jquery.flot.js"></script>
+<script type="text/javascript" src="../../Scripts/flot/jquery.flot.categories.js"></script>
+
+<div id="content">
+    <div class="grayLine"></div>
+    <form id="formHistorico" action="@Url.Action("Refresh")" method="get">
+        <br />
+        <h3 class="profileTitle">Histórico Geral</h3>
+        <br />
+        <label>Ano: </label>
+        <select id="selectAno">
+            <option value="2011">2011</option>
+            <option value="2012">2012</option>
+            <option value="2013">2013</option>
+            <option value="2014">2014</option>
+            <option value="2015">2015</option>
+        </select>
+        <a onclick="Refresh()" href="javascript:void(0)" class="btnPadrao">PESQUISAR</a>
+        <table id="tableHistoricGeral">
+            <tr>
+                <td>
+                    <label>Total Caronas Aceitas: </label>
+                </td>
+                <td>
+                    <b>@Model.ReceivedRides.Count()</b>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <label>Total Caronas Oferecidas: </label>
+                </td>
+                <td>
+                    <b>@Model.OfferedRides.Count()</b>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <label>Preço Pago: </label>
+                </td>
+                <td>
+                    <b>@String.Format("{0:C}", Model.TotalPaid)</b>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <label>Preço Recebido: </label>
+                </td>
+                <td>
+                    <b>@String.Format("{0:C}", Model.TotalGain)</b>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <label>Distância Percorrida: </label>
+                </td>
+                <td>
+                    <b>@String.Format("{0:0.00}", total) Km</b>
+                </td>
+            </tr>
+        </table>
+        <br />
+        <label>Gráfico indicando quantidade de caronas aceitas/oferecidas* mensalmente durante o ano de @ano:</label>
+        <br /><br />
+        <div id="placeholder" style="width: 950px; height: 300px;"></div>
+        <br /><br />
+
+        <label>Resumo anual:</label>
+        <br /><br />
+        <table class="tablesorter" cellspacing="0">
+            <tr style="background: #f2f2f4;">
+                <td></td>
+                <td>Janeiro</td>
+                <td>Fevereiro</td>
+                <td>Março</td>
+                <td>Abril</td>
+                <td>Maio</td>
+                <td>Junho</td>
+                <td>Julho</td>
+                <td>Agosto</td>
+                <td>Setembro</td>
+                <td>Outubro</td>
+                <td>Novembro</td>
+                <td>Dezembro</td>
+            </tr>
+            <tr>
+                <td>Pagos (R$):</td>
+                <td>@String.Format("{0:C}", Model.LucroAnualAceitas[1])</td>
+                <td>@String.Format("{0:C}", Model.LucroAnualAceitas[2])</td>
+                <td>@String.Format("{0:C}", Model.LucroAnualAceitas[3])</td>
+                <td>@String.Format("{0:C}", Model.LucroAnualAceitas[4])</td>
+                <td>@String.Format("{0:C}", Model.LucroAnualAceitas[5])</td>
+                <td>@String.Format("{0:C}", Model.LucroAnualAceitas[6])</td>
+                <td>@String.Format("{0:C}", Model.LucroAnualAceitas[7])</td>
+                <td>@String.Format("{0:C}", Model.LucroAnualAceitas[8])</td>
+                <td>@String.Format("{0:C}", Model.LucroAnualAceitas[9])</td>
+                <td>@String.Format("{0:C}", Model.LucroAnualAceitas[10])</td>
+                <td>@String.Format("{0:C}", Model.LucroAnualAceitas[11])</td>
+                <td>@String.Format("{0:C}", Model.LucroAnualAceitas[12])</td>
+            </tr>
+            <tr>
+                <td>Recebidos (R$):</td>
+                <td>@String.Format("{0:C}", Model.LucroAnualOferecidas[1])</td>
+                <td>@String.Format("{0:C}", Model.LucroAnualOferecidas[2])</td>
+                <td>@String.Format("{0:C}", Model.LucroAnualOferecidas[3])</td>
+                <td>@String.Format("{0:C}", Model.LucroAnualOferecidas[4])</td>
+                <td>@String.Format("{0:C}", Model.LucroAnualOferecidas[5])</td>
+                <td>@String.Format("{0:C}", Model.LucroAnualOferecidas[6])</td>
+                <td>@String.Format("{0:C}", Model.LucroAnualOferecidas[7])</td>
+                <td>@String.Format("{0:C}", Model.LucroAnualOferecidas[8])</td>
+                <td>@String.Format("{0:C}", Model.LucroAnualOferecidas[9])</td>
+                <td>@String.Format("{0:C}", Model.LucroAnualOferecidas[10])</td>
+                <td>@String.Format("{0:C}", Model.LucroAnualOferecidas[11])</td>
+                <td>@String.Format("{0:C}", Model.LucroAnualOferecidas[12])</td>
+            </tr>
+            <tr>
+                <td>Saldo</td>
+                <td>@String.Format("{0:C}", Helper.Sub(Model.LucroAnualOferecidas[1], Model.LucroAnualAceitas[1]))</td>
+                <td>@String.Format("{0:C}", Helper.Sub(Model.LucroAnualOferecidas[2], Model.LucroAnualAceitas[2]))</td>
+                <td>@String.Format("{0:C}", Helper.Sub(Model.LucroAnualOferecidas[3], Model.LucroAnualAceitas[3]))</td>
+                <td>@String.Format("{0:C}", Helper.Sub(Model.LucroAnualOferecidas[4], Model.LucroAnualAceitas[4]))</td>
+                <td>@String.Format("{0:C}", Helper.Sub(Model.LucroAnualOferecidas[5], Model.LucroAnualAceitas[5]))</td>
+                <td>@String.Format("{0:C}", Helper.Sub(Model.LucroAnualOferecidas[6], Model.LucroAnualAceitas[6]))</td>
+                <td>@String.Format("{0:C}", Helper.Sub(Model.LucroAnualOferecidas[7], Model.LucroAnualAceitas[7]))</td>
+                <td>@String.Format("{0:C}", Helper.Sub(Model.LucroAnualOferecidas[8], Model.LucroAnualAceitas[8]))</td>
+                <td>@String.Format("{0:C}", Helper.Sub(Model.LucroAnualOferecidas[9], Model.LucroAnualAceitas[9]))</td>
+                <td>@String.Format("{0:C}", Helper.Sub(Model.LucroAnualOferecidas[10], Model.LucroAnualAceitas[10]))</td>
+                <td>@String.Format("{0:C}", Helper.Sub(Model.LucroAnualOferecidas[11], Model.LucroAnualAceitas[11]))</td>
+                <td>@String.Format("{0:C}", Helper.Sub(Model.LucroAnualOferecidas[12], Model.LucroAnualAceitas[12]))</td>
+            </tr>
+        </table>
+
+        <br /><br />
+        <i>* Apenas são listadas caronas que tiveram ao menos 1 comprador.</i>
+        <div class="dottedLine"></div>
+
+        <input type="hidden" id="selectedYear" name="year"/>
+    </form>
+</div>
+
+<script type="text/javascript">
+    $(function () {
+
+        $('#selectAno').val(@ano);
+
+        var aceitas = [ ["Janeiro", @Model.CaronasAnuaisAceitas[1]],
+                        ["Fevereiro", @Model.CaronasAnuaisAceitas[2]],
+                        ["Março", @Model.CaronasAnuaisAceitas[3]],
+                        ["Abril", @Model.CaronasAnuaisAceitas[4]],
+                        ["Maio", @Model.CaronasAnuaisAceitas[5]],
+                        ["Junho", @Model.CaronasAnuaisAceitas[6]],
+                        ["Julho", @Model.CaronasAnuaisAceitas[7]],
+                        ["Agosto", @Model.CaronasAnuaisAceitas[8]],
+                        ["Setembro", @Model.CaronasAnuaisAceitas[9]],
+                        ["Outubro", @Model.CaronasAnuaisAceitas[10]],
+                        ["Novembro", @Model.CaronasAnuaisAceitas[11]],
+                        ["Dezembro", @Model.CaronasAnuaisAceitas[12]]];
+
+        var oferecidas = [["Janeiro", @Model.CaronasAnuaisOferecidas[1]],
+                        ["Fevereiro", @Model.CaronasAnuaisOferecidas[2]],
+                        ["Março", @Model.CaronasAnuaisOferecidas[3]],
+                        ["Abril", @Model.CaronasAnuaisOferecidas[4]],
+                        ["Maio", @Model.CaronasAnuaisOferecidas[5]],
+                        ["Junho", @Model.CaronasAnuaisOferecidas[6]],
+                        ["Julho", @Model.CaronasAnuaisOferecidas[7]],
+                        ["Agosto", @Model.CaronasAnuaisOferecidas[8]],
+                        ["Setembro", @Model.CaronasAnuaisOferecidas[9]],
+                        ["Outubro", @Model.CaronasAnuaisOferecidas[10]],
+                        ["Novembro", @Model.CaronasAnuaisOferecidas[11]],
+                        ["Dezembro", @Model.CaronasAnuaisOferecidas[12]]];
+
+        $.plot($("#placeholder"), [{ data: aceitas, label: "Aceitas"},
+             { data: oferecidas, label: "Oferecidas"}], {
+            series: {
+                bars: {
+                    show: true,
+                    barWidth: 0.6,
+                    align: "center"
+                }
+            },
+            xaxis: {
+                mode: "categories",
+                tickLength: 0
+            }
+        });
+    });
+
+    function Refresh() {
+        var selectedYear = $('#selectAno').val();
+        $('#selectedYear').val(selectedYear);
+        $('#formHistorico').submit();
+    }
+</script>

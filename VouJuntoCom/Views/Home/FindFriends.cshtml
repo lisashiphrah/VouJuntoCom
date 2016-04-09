@@ -1,0 +1,81 @@
+﻿@using VouJuntoCom.Models
+@model List<UserModel>
+@{
+    ViewBag.Title = "FindFriends";
+}
+
+<div id="content">
+    <form action="@Url.Action("FilterFriends")" method="get">
+        <div class="content" style="padding: 0px;">
+            <div id="divFiltro" style="border-right: 1px solid #D5D2D2; max-width: 250px; padding: 10px; float: left;">
+                <label style="font-size: 12px;"><b>Encontre seus amigos com maior facilidade utilizando os filtros abaixo:</b></label>
+                <br />
+                <br />
+                <label>Pesquise pelo nome:</label>
+                <input type="text" id="txtNome" name="findName" class="defaultMedium" />
+                @*<label>Pesquise pela idade:</label>
+                <input type="text" id="txtIdade" name="findAge" class="defaultMedium" />*@
+                <label>Pesquise pela cidade:</label>
+                <input type="text" id="txtCidade" name="findCity" class="defaultMedium" />
+                <label>Pesquise pelo email:</label>
+                <input type="text" id="txtEmail" name="findEmail" class="defaultMedium" />
+                <br />
+                <br />
+                <div style="text-align: right">
+                    <a href="javascript:void(0)" onclick="FilterFriends()" class="btnPadrao">PESQUISAR</a>
+                </div>
+            </div>
+            <div id="divSugestoes">
+                <label><b>Seguem abaixo sugestões de amizades para você:</b></label>
+                <br />
+                <br />
+                @if ((Model == null) || (Model.Count == 0))
+                {
+                    <label>Não foram encontrados amigos para o filtro selecionado.</label>
+                }
+                else
+                {
+                    foreach (var user in Model)
+                    {
+                        var userID = user.ID.ToString();
+                        <div class="friend" id="@user.ID">
+                            <img src = "@Url.Action("GetImage", "Home", new { userID })"/>
+                            <div>
+                                <label>@user.FullName</label><br />
+                                <label>@user.City</label><br />
+                                <a href="javascript:void(0)" onclick="AddFriend('@user.ID')">
+                                    <img src="@Url.Content("~/Content/Images/plus.png")"/>
+                                    Adicionar</a>
+                            </div>
+                        </div>              
+                    }
+                }
+            </div>
+            <div class="clearBoth"></div>
+        </div>
+    </form>
+</div>
+<script>
+    function FilterFriends() {
+        $('form').submit();
+    }
+
+    function AddFriend(id) {
+        if(confirm('Você tem certeza que deseja adicionar esta pessoa ao seu círculo de amizades?')) {
+            $.ajax({
+                url: "@Url.Action("AddFriend", "Home")",
+                type: "POST",
+                data: { friendID : id }
+            }).done(function (data) {
+                if (data == true || data === true || data == 'True') {
+                    $('#' + id + '').css('opacity', 0.3);
+                    $('#' + id + ' a').remove();
+                }
+                else {
+                    alert('Problemas no envio do convite.');
+                }
+            });
+        }
+    }
+
+</script>

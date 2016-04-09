@@ -1,0 +1,36 @@
+﻿@using VouJuntoCom.Models
+@model List<Notifications>
+@{
+    ViewBag.Title = "Notifications";
+    Layout = Url.Content("~/Views/Shared/_NullLayout.cshtml");
+}
+
+<style>
+    #listSolicitacoes
+    {
+        margin: 10px;
+    }
+</style>
+<div id="content" style="overflow: auto; height: 200px;">
+    <div class="header">
+        <h3>Novas Notificações</h3>
+    </div>
+    <ul id="listSolicitacoes">
+        @if ((Model == null) || (Model.Count == 0))
+        {  
+            <li>
+                <label><b>Não há notificações.</b></label>
+            </li>
+        }
+        else
+        {
+            foreach (var notification in Model)
+            {
+                <li style="border-bottom: 1px dotted #a5a6a8">
+                    <label><b>@notification.Text</b></label>
+                </li>
+            }
+        }
+    </ul>
+
+</div>

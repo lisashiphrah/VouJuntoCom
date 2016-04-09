@@ -1,0 +1,26 @@
+﻿#menu
+{
+    float:right;
+    margin-top:15px;
+}
+
+#menu ul li
+{
+    float:left;
+    margin-left:20px;
+    color: #646060;
+    font-size: 14px;
+    cursor:pointer;
+    text-align:center;
+}
+
+#menu ul li a
+{
+    padding:10px;
+    border-radius: 4px;
+}
+
+#menu ul li a:hover
+{
+    background:#eeeaea;
+}

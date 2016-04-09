@@ -1,0 +1,133 @@
+﻿@using VouJuntoCom.Models
+@model VouJuntoCom.Models.CarModel
+@{
+    Layout = Url.Content("~/Views/Shared/_NullLayout.cshtml");
+}
+
+<div id="content" style="overflow: auto; height: 430px;">
+    <div class="header">
+        <h3>Cadastrar Novo Veículo</h3>
+    </div>
+    <form action="@Url.Action("NewCar")" method="post" style="padding:20px;" id="formCar">
+        <ul>
+            <li>
+                <table>
+                    <tr>
+                        <td style="width: 290px">
+                            <label>@Html.LabelFor(model => model.Make) <span class="obrigatorio">*</span>:</label>
+                        </td>
+                        <td style="width: 290px">
+                            <label>@Html.LabelFor(model => model.Modelo) <span class="obrigatorio">*</span>:</label>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            @Html.TextBoxFor((model => model.Make), new { @class = "defaultMedium required", @MaxLength = "100" })
+                        </td>
+                        <td>
+                            @Html.TextBoxFor((model => model.Modelo), new { @class = "defaultMedium required", @MaxLength = "100" })
+                        </td>
+                    </tr>
+                </table>
+            </li>
+            <li>
+                <table>
+                    <tr>
+                        <td style="width: 290px">
+                            <label>@Html.LabelFor(model => model.Color) <span class="obrigatorio">*</span>:</label>
+                        </td>
+                        <td style="width: 290px">
+                            <label>@Html.LabelFor(model => model.RENAVAM) <span class="obrigatorio">*</span>:</label>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            @Html.TextBoxFor((model => model.Color), new { @class = "defaultMedium required", @MaxLength = "30" })
+                        </td>
+                        <td>
+                            @Html.TextBoxFor((model => model.RENAVAM), new { @class = "defaultMedium required numbers", @MaxLength = "9" })
+                        </td>
+                    </tr>
+                </table>
+            </li>
+            <li>
+                @Html.LabelFor(model => model.Digits): </li>
+            <li>
+                @Html.TextBoxFor((model => model.Digits), new { @class = "numbers", @MaxLength = "2" })
+            </li>
+            <li>
+                <div style="border-bottom: 1px dotted #808080; height: 1px; width: 100%; margin-bottom: 10px; margin-top: 10px;"></div>
+            </li>
+            <li>
+                <label>Selecione os elementos presentes e permitidos no seu carro:</label>
+            </li>
+            <li>
+                <table>
+                    <tr>
+                        <td>
+                            @Html.CheckBoxFor(model => model.ArConditioning)
+                            <label for="ArConditioning">Ar Condicionado&nbsp;&nbsp;&nbsp;</label>
+                        </td>
+                        <td>
+                            @Html.CheckBoxFor(model => model.Radio)
+                            <label for="Radio">Radio&nbsp;&nbsp;&nbsp;</label>
+                        </td>
+                        <td>
+                            @Html.CheckBoxFor(model => model.Smoke)
+                            <label for="Smoke">Permite Fumante&nbsp;&nbsp;&nbsp;</label>
+                        </td>
+                        <td>
+                            @Html.CheckBoxFor(model => model.Pet)
+                            <label for="Pet">Permite Animais&nbsp;&nbsp;&nbsp;</label>
+                        </td>
+                    </tr>
+                </table>
+            </li>
+        </ul>
+        <div style="text-align: right; margin-top: 20px;">
+             <a onclick="GoBack()" href="javascript:void(0)" class="btnCancel">CANCELAR</a>
+            <a href="javascript:void(0)" onclick="AddCar()" class="btnPadrao">CADASTRAR</a>
+        </div>
+
+    </form>
+</div>
+<script>
+    function AddCar() {
+        var validate = ValidateFields('formCar');
+        if (validate) {
+            var carToInsert =
+                {
+                    Make: $('#Make').val(),
+                    Modelo: $('#Modelo').val(),
+                    Color: $('#Color').val(),
+                    RENAVAM: $('#RENAVAM').val(),
+                    Digits: $('#Digits').val(),
+                    ArConditioning: $('#ArConditioning').attr('checked')?true:false,
+                    Radio: $('#Radio').attr('checked')?true:false,
+                    Smoke: $('#Smoke').attr('checked')?true:false,
+                    Pet: $('#Pet').attr('checked')?true:false
+                };
+
+            $.ajax({
+                url: "@Url.Action("NewCar", "Cars")",
+                type: "POST",
+                data: JSON.stringify({ model: carToInsert }),
+                contentType: 'application/json'
+            }).done(function (data) {
+                OpenPopup(200, 1000, data);
+            });
+        }
+        else {
+            ShowErrorDialog('Há campos obrigatórios não preenchidos.');
+        }
+    }
+
+    function GoBack() {
+        $.ajax({
+            url: "@Url.Action("BackList", "Cars")",
+             type: "GET"
+         }).done(function (data) {
+             OpenPopup(200, 1000, data);
+         });
+    }
+</script>

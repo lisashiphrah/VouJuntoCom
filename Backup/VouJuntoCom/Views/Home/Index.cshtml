@@ -1,0 +1,188 @@
+﻿@{
+    ViewBag.Title = "Home";
+}
+
+<div class="grayLine"></div>
+<div>
+    <!-- Profile Picture -->
+    <h3 class="profileTitle">Cássia Zottis</h3>
+    <label class="subtitles">999 pontos</label>
+    <article id="Article_Picture" style="width:190px;float:right;text-align:right;">
+        <img class="profilePictureBig" src="@Url.Content("~/Content/Images/monkey.jpg")"/>
+        <div class="clearBoth"></div>
+    </article>
+
+    <!-- Caronas do usuário -->
+    <article class="articleDivider" id="Section_Caronas" style="width:760px;">
+        <div class="header">
+            <h3>Caronas</h3>
+            <ul class="tabs">
+   			    <li id="liOferecidas" class="active" style="">
+                    <a href="javascript:void(0);" onclick="OpenOferecidas()">Oferecidas</a>
+                </li>
+    		    <li id="liAceitas">
+                    <a href="javascript:void(0);" onclick="OpenAceitas()">Aceitas</a>
+                </li>
+		    </ul>
+        </div>
+        <table class="tablesorter" cellspacing="0"> 
+		    <thead> 
+			    <tr> 
+    			    <th>Título</th> 
+    			    <th id="Motorista-Carona">Motorista</th> 
+    			    <th>Data</th>
+                    <th>Confirmados</th> 
+    			    <th>Ações</th> 
+			    </tr> 
+		    </thead> 
+		    <tbody> 
+			    <tr> 
+    			    <td>Lorem Ipsum Dolor Sit Amet</td> 
+    			    <td>Fulaninho</td> 
+    			    <td>10/10/2012</td> 
+                    <td>3</td>
+    			    <td>
+                        <input type="image" src="@Url.Content("~/Content/Images/icn_cancel.png")" 
+                            title="Cancelar carona" onclick="CancelarCarona()" alt="Cancelar carona" /> 
+                        <input type="image" src="@Url.Content("~/Content/Images/icn_edit.png")" title="Editar" alt="Editar carona"/>
+                    </td> 
+			    </tr> 
+		    </tbody> 
+	    </table>
+        <div class="clearBoth"></div>
+    </article>
+
+</div>
+<!-- Status -->
+<article class="articleDivider" id="Section_Graphs">
+    <div class="header"><h3>Meu Status</h3></div>
+    <div class="sectionContent">
+
+        <!-- TODO: ADICIONAR GRÁFICO DE CARONAS-->
+
+        <article class="stats_overview">
+		    <div>
+			    <p class="overview_titulo">Oferecidas</p>
+			    <p class="overview_valor">30</p>
+                <p class="overview_titulo">Aceitas</p>
+			    <p class="overview_valor">30</p>
+		    </div>
+		    <div>
+                <p class="overview_titulo">Recebido</p>
+			    <p class="overview_valor">R$ 200,00</p>
+                <p class="overview_titulo">Pago</p>
+			    <p class="overview_valor">R$ 200,00</p>
+		    </div>
+	    </article>
+    </div>
+    <div class="clearBoth"></div>
+</article>
+
+<!-- Mensagens -->
+<article class="articleDivider" id="Section_TodasMensagens" style="width:350px; float:left;">
+    <div class="header">
+        <h3>Mensagens</h3>
+        <ul class="tabs">
+   			<li id="liRecebidas" class="active" style="">
+                <a href="javascript:void(0);" onclick="OpenRecebidas()">Recebidas</a>
+            </li>
+    		<li id="liEnviadas">
+                <a href="javascript:void(0);" onclick="OpenEnviadas()">Enviadas</a>
+            </li>
+		</ul>
+    </div>
+    <div class="message_list">
+		<div class="module_content">
+			<div class="message">
+                <p>Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor.</p>
+			    <p style="margin-bottom:10px;margin-top:10px;">
+                    <strong>Fulaninho</strong>
+                    <input type="image" src="@Url.Content("~/Content/Images/icn_trash.png")"
+                        onclick=" ApagarMensagem()" title="Apagar" style="float:right;"/>
+                    <input type="image" src="@Url.Content("~/Content/Images/icn_jump_back.png")" title="Responder" style="float:right;"/>
+                </p>
+            </div>
+		</div>
+	</div>
+</article>
+
+<!-- Nova Mensagem -->
+<article class="articleDivider" id="Section_NovasMensagens" style="width:600px;float:right;">
+    <div class="header">
+        <h3>Nova Mensagem</h3>
+    </div>
+     <div class="module_content">
+		<fieldset class="fieldsetDivisor" style="width:98%">
+			<label>Destinatário</label>
+			<input style="width:550px;" type="text" />
+		</fieldset>
+		<fieldset class="fieldsetDivisor" style="width:98%">
+			<label>Conteúdo</label>
+			<textarea rows="12" cols="83"></textarea>
+		</fieldset>
+        <div style="text-align:right;">
+            <a href="javascript:void(0)" class="btnPadrao">ENVIAR</a>
+        </div>
+        <div class="clear"></div>
+    </div>
+</article>
+
+<script>
+    function CancelarCarona() {
+        if (confirm("Você tem certeza que deseja cancelar esta carona?")) {
+        }
+    }
+
+    function ApagarMensagem() {
+        if (confirm("Você tem certeza que deseja apagar esta mensagem?")) {
+        }
+    }
+
+    function OpenOferecidas() {
+        if ($('#liAceitas').hasClass('active')) {
+            $.ajax({
+                url: ""
+                //data: {attr:attr_value},
+            }).done(function () {
+                $('#liOferecidas').addClass('active');
+                $('#liAceitas').removeClass('active');
+            });
+        }
+    }
+
+    function OpenAceitas() {
+        if ($('#liOferecidas').hasClass('active')) {
+            $.ajax({
+                url: ""
+                //data: {attr:attr_value},
+            }).done(function () {
+                $('#liAceitas').addClass('active');
+                $('#liOferecidas').removeClass('active');
+            });
+        }
+    }
+
+    function OpenRecebidas() {
+        if ($('#liEnviadas').hasClass('active')) {
+            $.ajax({
+                url: ""
+                //data: {attr:attr_value},
+            }).done(function () {
+                $('#liRecebidas').addClass('active');
+                $('#liEnviadas').removeClass('active');
+            });
+        }
+    }
+
+    function OpenEnviadas() {
+        if ($('#liRecebidas').hasClass('active')) {
+            $.ajax({
+                url: ""
+                //data: {attr:attr_value},
+            }).done(function () {
+                $('#liEnviadas').addClass('active');
+                $('#liRecebidas').removeClass('active');
+            });
+        }
+    }
+</script>

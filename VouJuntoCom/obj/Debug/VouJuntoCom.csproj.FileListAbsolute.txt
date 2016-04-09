@@ -1,0 +1,43 @@
+c:\users\cássia\documents\visual studio 2010\Projects\VouJuntoCom\VouJuntoCom\bin\VouJuntoCom.dll
+c:\users\cássia\documents\visual studio 2010\Projects\VouJuntoCom\VouJuntoCom\bin\VouJuntoCom.pdb
+c:\users\cássia\documents\visual studio 2010\Projects\VouJuntoCom\VouJuntoCom\bin\EntityFramework.dll
+c:\users\cássia\documents\visual studio 2010\Projects\VouJuntoCom\VouJuntoCom\bin\EntityFramework.xml
+c:\users\cássia\documents\visual studio 2010\Projects\VouJuntoCom\VouJuntoCom\obj\Debug\ResolveAssemblyReference.cache
+c:\users\cássia\documents\visual studio 2010\Projects\VouJuntoCom\VouJuntoCom\obj\Debug\VouJuntoCom.dll
+c:\users\cássia\documents\visual studio 2010\Projects\VouJuntoCom\VouJuntoCom\obj\Debug\VouJuntoCom.pdb
+C:\Users\cassia\Dropbox\VouJunto.com\VouJuntoCom\VouJuntoCom\bin\VouJuntoCom.dll
+C:\Users\cassia\Dropbox\VouJunto.com\VouJuntoCom\VouJuntoCom\bin\VouJuntoCom.pdb
+C:\Users\cassia\Dropbox\VouJunto.com\VouJuntoCom\VouJuntoCom\bin\EntityFramework.xml
+C:\Users\cassia\Dropbox\VouJunto.com\VouJuntoCom\VouJuntoCom\obj\Debug\ResolveAssemblyReference.cache
+C:\Users\cassia\Dropbox\VouJunto.com\VouJuntoCom\VouJuntoCom\obj\Debug\VouJuntoCom.dll
+C:\Users\cassia\Dropbox\VouJunto.com\VouJuntoCom\VouJuntoCom\obj\Debug\VouJuntoCom.pdb
+C:\Users\Cássia\Dropbox\VouJunto.com\VouJuntoCom\VouJuntoCom\obj\Debug\ResolveAssemblyReference.cache
+C:\Users\Cássia\Dropbox\VouJunto.com\VouJuntoCom\VouJuntoCom\bin\VouJuntoCom.dll
+C:\Users\Cássia\Dropbox\VouJunto.com\VouJuntoCom\VouJuntoCom\bin\VouJuntoCom.pdb
+C:\Users\Cássia\Dropbox\VouJunto.com\VouJuntoCom\VouJuntoCom\obj\Debug\VouJuntoCom.dll
+C:\Users\Cássia\Dropbox\VouJunto.com\VouJuntoCom\VouJuntoCom\obj\Debug\VouJuntoCom.pdb
+C:\Users\Cássia\Dropbox\VouJuntoCom - Sem conversão - Copy\VouJuntoCom\bin\VouJuntoCom.dll
+C:\Users\Cássia\Dropbox\VouJuntoCom - Sem conversão - Copy\VouJuntoCom\bin\VouJuntoCom.pdb
+C:\Users\Cássia\Dropbox\VouJuntoCom - Sem conversão - Copy\VouJuntoCom\obj\Debug\VouJuntoCom.dll
+C:\Users\Cássia\Dropbox\VouJuntoCom - Sem conversão - Copy\VouJuntoCom\obj\Debug\VouJuntoCom.pdb
+C:\Users\Cássia\VouJuntoCom - Sem conversão - Copy\VouJuntoCom\bin\VouJuntoCom.dll
+C:\Users\Cássia\VouJuntoCom - Sem conversão - Copy\VouJuntoCom\bin\VouJuntoCom.pdb
+C:\Users\Cássia\VouJuntoCom - Sem conversão - Copy\VouJuntoCom\obj\Debug\VouJuntoCom.csprojResolveAssemblyReference.cache
+C:\Users\Cássia\VouJuntoCom - Sem conversão - Copy\VouJuntoCom\obj\Debug\VouJuntoCom.dll
+C:\Users\Cássia\VouJuntoCom - Sem conversão - Copy\VouJuntoCom\obj\Debug\VouJuntoCom.pdb
+C:\Users\Cássia\Dropbox\VouJuntoCom - Sem conversão - Copy\VouJuntoCom\obj\Debug\VouJuntoCom.csprojResolveAssemblyReference.cache
+D:\VouJuntoCom - Sem conversão - Copy\VouJuntoCom\bin\VouJuntoCom.dll
+D:\VouJuntoCom - Sem conversão - Copy\VouJuntoCom\bin\VouJuntoCom.pdb
+D:\VouJuntoCom - Sem conversão - Copy\VouJuntoCom\obj\Debug\VouJuntoCom.csprojResolveAssemblyReference.cache
+D:\VouJuntoCom - Sem conversão - Copy\VouJuntoCom\obj\Debug\VouJuntoCom.dll
+D:\VouJuntoCom - Sem conversão - Copy\VouJuntoCom\obj\Debug\VouJuntoCom.pdb
+D:\VouJuntoCom - Com Conversão\VouJuntoCom\bin\VouJuntoCom.dll
+D:\VouJuntoCom - Com Conversão\VouJuntoCom\bin\VouJuntoCom.pdb
+D:\VouJuntoCom - Com Conversão\VouJuntoCom\obj\Debug\VouJuntoCom.csprojResolveAssemblyReference.cache
+D:\VouJuntoCom - Com Conversão\VouJuntoCom\obj\Debug\VouJuntoCom.dll
+D:\VouJuntoCom - Com Conversão\VouJuntoCom\obj\Debug\VouJuntoCom.pdb
+F:\VouJuntoCom - Com Conversão\VouJuntoCom\bin\VouJuntoCom.dll
+F:\VouJuntoCom - Com Conversão\VouJuntoCom\bin\VouJuntoCom.pdb
+F:\VouJuntoCom - Com Conversão\VouJuntoCom\obj\Debug\VouJuntoCom.csprojResolveAssemblyReference.cache
+F:\VouJuntoCom - Com Conversão\VouJuntoCom\obj\Debug\VouJuntoCom.dll
+F:\VouJuntoCom - Com Conversão\VouJuntoCom\obj\Debug\VouJuntoCom.pdb

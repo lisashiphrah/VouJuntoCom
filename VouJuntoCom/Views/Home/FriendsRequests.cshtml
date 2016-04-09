@@ -1,0 +1,75 @@
+﻿@using VouJuntoCom.Models
+@model List<UserModel>
+@{
+    ViewBag.Title = "FriendsRequests";
+    Layout = Url.Content("~/Views/Shared/_NullLayout.cshtml");
+}
+
+<style>
+    #listSolicitacoes img
+    {
+        width: 70px;
+        border-radius: 10px;
+        height: 70px;
+        float: left;
+        margin-right:5px;
+    }
+
+    #listSolicitacoes
+    {
+        margin:10px;
+    }
+</style>
+<div id="content" style="overflow: auto; height: 200px;">
+    <div class="header">
+        <h3>Solicitações Pendentes</h3>
+    </div>
+    <ul id="listSolicitacoes">
+        @if ((Model == null) || (Model.Count == 0))
+        {
+            <li>
+                <label><b>Não há solicitações de amizades pendentes.</b></label>
+            </li>
+        }
+        else
+        {
+            foreach (var friend in Model)
+            {
+                var userID = friend.ID;
+                <li id="@userID" style="border-bottom:1px dotted #a5a6a8">
+                    <div style="width: 300px; display: inline-block;">
+                        <img src = "@Url.Action("GetImage", "Home", new { userID })"/>
+                        <div>
+                            <label>@friend.FullName</label><br />
+                            <label>@friend.City</label><br />
+                        </div>
+                    </div>
+                    <div style="display: inline-block; text-align: right; width:250px;">
+                        <a href="javascript:void(0)" onclick="AcceptFriend('@friend.ID')" class="btnPadrao">ACEITAR</a>
+                        <a href="javascript:void(0)" onclick="RejectFriend('@friend.ID')" class="btnCancel">REJEITAR</a>
+                    </div>
+                </li>
+            }
+        }
+    </ul>
+
+</div>
+
+<script>
+    function AcceptFriend(id) {
+        $.ajax({
+            url: "@Url.Action("AcceptFriend", "Home")",
+            type: "POST",
+            data: { userID: id }
+        }).done(function (data) {
+            if (data == true || data === true || data == 'True') {
+                $('#' + id + '').fadeOut(400, function () {
+                    $(this).remove();
+                });
+            }
+            else {
+                alert('Problemas no envio do convite.');
+            }
+        });
+    }
+</script>

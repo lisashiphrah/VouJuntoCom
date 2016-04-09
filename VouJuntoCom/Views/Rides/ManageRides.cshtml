@@ -1,0 +1,129 @@
+﻿@using VouJuntoCom.DAO
+@model VouJuntoCom.Models.UserModel
+@{
+    ViewBag.Title = "ManageRides";
+}
+
+<div id="content">
+    <div class="grayLine"></div>
+
+    @*  Caronas Oferecidas  *@
+    <br />
+    <h3 class="profileTitle">Caronas Oferecidas</h3>
+    <br />
+    <table class="tablesorter CursorHand ManageRidesTable" cellspacing="0" id="tableOferecidas">
+        <thead>
+            <tr>
+                <th>Data de Saída</th>
+                <th>Local Saída</th>
+                <th>Local Chegada</th>
+                <th>Confirmados</th>
+                <th>Preço Individual</th>
+            </tr>
+        </thead>
+        <tbody>
+            @if (Model.DonorRides.Count() == 0)
+            {
+                <tr>
+                    <td colspan="5">Você ainda não ofereceu nenhuma carona.</td>
+                </tr>
+            }
+            else
+            {
+                foreach (var ride in Model.DonorRides)
+                {
+                    var left = ride.Seats - ride.RemainingSeats;
+                    string selectedRide = ride.ID.ToString();
+                    <tr onclick="window.location.href = '@Url.Action("GetInfoRide", "Rides", new { selectedRide })'">
+                    <td>@ride.TimeFrom</td>
+                    <td>@ride.FromPlace</td>
+                    <td>@ride.ToPlace</td>
+                    <td>@left</td>
+                    <td>@ride.Price</td>
+                </tr>
+                }
+            }
+        </tbody>
+    </table>
+
+    <br />
+    <br />
+    @*  Caronas Aceitas  *@
+
+    <h3 class="profileTitle">Caronas Aceitas</h3>
+    <br />
+    <table class="tablesorter CursorHand" cellspacing="0" id="tableAceitas">
+        <thead>
+            <tr>
+                <th>Data de Saída</th>
+                <th>Local Saída</th>
+                <th>Local Chegada</th>
+                <th>Motorista</th>
+                <th>Preço</th>
+            </tr>
+        </thead>
+        <tbody>
+            @if (Model.ReceiverRides.Count() == 0)
+            {
+                <tr>
+                    <td colspan="5">Você ainda não aceitou nenhuma carona.</td>
+                </tr>
+            }
+            else
+            {
+                foreach (var ride in Model.ReceiverRides)
+                {
+                    string selectedRide = ride.ID.ToString();
+                    <tr onclick="window.location.href = '@Url.Action("GetInfoRide", "Rides", new { selectedRide })'">
+                        <td>@ride.TimeFrom</td>
+                        <td>@ride.FromPlace</td>
+                        <td>@ride.ToPlace</td>
+                        <td>@ride.DonorName</td>
+                        <td>@ride.Price</td>
+                    </tr>
+                }
+            }
+        </tbody>
+    </table>
+
+     @*  Reservas em Aberto  *@
+
+    <br />
+    <br />
+    <h3 class="profileTitle">Reservas em Aberto</h3>
+    <br />
+    <table class="tablesorter CursorHand" cellspacing="0" id="tableAceitas">
+        <thead>
+            <tr>
+                <th>Data de Saída</th>
+                <th>Local Saída</th>
+                <th>Local Chegada</th>
+                <th>Motorista</th>
+                <th>Preço</th>
+            </tr>
+        </thead>
+        <tbody>
+            @if (Model.OpenRequests.Count() == 0)
+            {
+                <tr>
+                    <td colspan="5">Você não possui reservas em aberto.</td>
+                </tr>
+            }
+            else
+            {
+                var listReservations = RidesRequestManager.GetAllRidesFromReservation(Model.ID);
+                foreach (var ride in listReservations)
+                {
+                    string selectedRide = ride.ID.ToString();
+                    <tr onclick="window.location.href = '@Url.Action("GetInfoRide", "Rides", new { selectedRide })'">
+                        <td>@ride.TimeFrom</td>
+                        <td>@ride.FromPlace</td>
+                        <td>@ride.ToPlace</td>
+                        <td>@ride.DonorName</td>
+                        <td>@ride.Price</td>
+                    </tr>
+                }
+            }
+        </tbody>
+    </table>
+</div>

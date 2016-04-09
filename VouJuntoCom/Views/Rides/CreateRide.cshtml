@@ -1,0 +1,156 @@
+﻿@using VouJuntoCom.Models
+@using VouJuntoCom.DAO
+@using VouJuntoCom.Helpers
+@model VouJuntoCom.Models.RidesModel
+@{
+    ViewBag.Title = "CreateRide";
+    ErrorEnum error = ErrorEnum.NoErrors;
+}
+
+<script type="text/javascript" src="https://www.google.com/jsapi"></script>
+<script type="text/javascript" src="../../Scripts/googleMaps.js"></script>
+<link href="@Url.Content("~/Content/Styles/Share.css")" rel="stylesheet" type="text/css">
+
+<div id="content">
+    <form action="@Url.Action("CreateRide")" method="post" id="formRides">
+        <div class="grayLine"></div>
+        <label class="secondTitle">Crie uma nova carona</label>
+        <div id="creationForm">
+            <table id="tableFormCaronas">
+                <tr>
+                    <td>
+                        <label>Origem:  <span class="obrigatorio">*</span></label>
+                    </td>
+                    <td>
+                        @Html.TextBoxFor((ride => ride.FromPlace), new { @class = "inputBigPx required", @id = "inputFrom" })
+                    </td>
+                    <td>
+                        <label>Data Saída:  <span class="obrigatorio">*</span></label>
+                    </td>
+                    <td>
+                        <input type="text" id="dateFrom" name="dateFrom" class="required date" />
+                        <div id="calendarFrom"></div>
+                    </td>
+                    <td>
+                        <label>Hora Saída:  <span class="obrigatorio">*</span></label>
+                    </td>
+                    <td>
+                        <input type="text" id="timeFrom" name="timeFrom" class="required time" style="width: 80px;" />
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <label>Destino:  <span class="obrigatorio">*</span></label>
+                    </td>
+                    <td>
+                        @Html.TextBoxFor((ride => ride.ToPlace), new { @class = "inputBigPx required", @id = "inputTo" })
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2">
+                        <img style="cursor:pointer" src="@Url.Content("~/Content/Images/icn_alert_success.png")" onclick="createRoute()"/>
+                        <label style="cursor: pointer" onclick="createRoute()">Criar Rota no Mapa</label>
+                    </td>
+                    <td colspan="4">
+                        <label>Selecione o tipo de viagem:</label>
+                        <input type="radio" value="0" name="groupRadio" id="radioIntra" checked="checked" />
+                        <label for="radioIntra">Intramunicipais</label>
+                        <input type="radio" value="1" name="groupRadio" id="radioInter" />
+                        <label for="radioInter">Intermunicipais</label>
+                    </td>
+                </tr>
+            </table>
+        </div>
+        <div id="map_div">
+            <div id="map_canvas"></div>
+            <div id="waysDirections">
+            </div>
+            <input type="hidden" id="steps" name="steps" />
+        </div>
+        <table id="tableFormCaronasBottom">
+            <tr>
+                <td>
+                    <label>Porta-malas:</label>
+                </td>
+                <td style="margin-right: 5px;">
+                    @Html.TextBoxFor((ride => ride.TrunkSize), new { @class = "numbers inputSmall" })  <label>litros </label>
+                </td>
+
+                <td>
+                    <label>Veículo:  <span class="obrigatorio">*</span></label>
+                </td>
+                <td style="border-right: 1px solid #a5a3a3;">
+                    <select name="selectedCar" id="selectedCar">
+                        @foreach (var carro in CarsManager.RetrieveUserCars(Model.DonorID, out error))
+                        {
+                            if (carro.Digits != 0 && carro.Digits != null)
+                            {
+                            <option value="@carro.ID">@carro.Modelo - @carro.Digits</option>
+                            }
+                            else
+                            {
+                            <option value="@carro.ID">@carro.Modelo</option>
+                            }
+                        }
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <label>Lugares:  <span class="obrigatorio">*</span></label>
+                </td>
+                <td>
+                    @Html.TextBoxFor((ride => ride.Seats), new { @class = "required numbers inputSmall" })
+                </td>
+                <td></td>
+                <td style="border-right: 1px solid #a5a3a3;"></td>
+            </tr>
+        </table>
+        <label>Caso desejar, insira uma descrição do seu percurso: </label>
+        <br />
+        <div id="bottom_form">
+            @Html.TextAreaFor((ride => ride.Message), new { @class = "textAreaMessage" })
+            <a onclick="AddRide()" href="javascript:void(0)" style="float: right;" class="btnPadrao">CADASTRAR</a>
+        </div>
+        @Html.HiddenFor(ride => ride.DonorID)
+        @Html.HiddenFor(ride => ride.DonorName)
+        @Html.HiddenFor((ride => ride.Price), new { id = "priceHidden" })
+        @Html.HiddenFor(ride => ride.RemainingSeats)
+        @Html.HiddenFor(ride => ride.Distance)
+    </form>
+</div>
+
+<script>
+    function AddRide() {
+        if ($('#selectedCar').val() != null) {
+
+            if ($('#waysDirections').html().trim() != null && $('#waysDirections').html().trim() != "") {
+                if (ValidateFields()) {
+                    $('#formRides').submit();
+                }
+                else {
+                    ShowErrorDialog('Há campos obrigatórios não preenchidos.');
+                }
+            }
+            else {
+                ShowErrorDialog('É necessário criar uma rota no mapa.');
+            }
+        }
+        else {
+            ShowErrorDialog('Você não possui veículos cadastrados para registrar uma carona.');
+        }
+    }
+
+    $('document').ready(function () {
+        $('#GiveUpTolerance').mask('99/99/9999');
+        $('#GiveUpTolerance').datepicker();
+        $("#dateTo").datepicker();
+        $('#dateTo').mask('99/99/9999');
+        $("#dateFrom").datepicker();
+        $('#dateFrom').mask('99/99/9999');
+
+        $('#timeTo').mask('99:99');
+        $('#timeFrom').mask('99:99');
+
+    });
+</script>

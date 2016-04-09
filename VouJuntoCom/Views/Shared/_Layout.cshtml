@@ -1,0 +1,82 @@
+﻿@using VouJuntoCom.Helpers
+@{
+    var authenticate = User.Identity.IsAuthenticated;
+    var menuView = "";
+    if (authenticate)
+    {
+        menuView = "_MenuLogin";
+    }
+    else
+    {
+        menuView = "_MenuLogout";
+    }
+        
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>VouJunto.com</title>
+    <link rel="shortcut icon" href="@Url.Content("~/Content/Images/favicon.ico")"/>
+    <link rel="image_src" href="@Url.Content("~/Content/Images/logo.png")" />
+    <meta charset="utf-8"/>
+    <meta name="author" content="Cássia Zottis"/>
+    <meta name="title" content="VouJunto.com" />
+    <meta name="Description" content="VouJunto.com - Solução sustentável para o compartilhamento de caronas"/>
+    <meta name="Keywords" content="compartilhamento, caronas, voujunto, voujuntocom"/>
+    <meta name="application-name" content="VouJunto.com" />
+    <meta name="msapplication-tooltip" content="VouJunto.com" />
+    <link href="@Url.Content("~/Content/Styles/Site.css")" rel="stylesheet" type="text/css"/>
+    <link href="@Url.Content("~/Content/Styles/jquery-ui-1.9.0.custom.css")" rel="stylesheet" type="text/css" />
+    <script type="text/javascript" src="../../Scripts/jquery-1.8.2.js"></script>
+    <script type="text/javascript" src="../../Scripts/jquery-ui-1.9.0.custom.js"></script>
+    <script type="text/javascript" src="../../Scripts/general.js"></script>
+    <script type="text/javascript" src="../../Scripts/masked-input-plugin.js"></script>
+</head>
+<body>
+    <header>
+        <article id="top">
+            <div class="wrap">
+                <img id="imgEcoSolution" src="../../Content/Images/EcoSolution.png" title="EcoSolutions - Soluções para o Meio Ambiente" alt="EcoSolutions - Soluções para o Meio Ambiente" />
+                @if (authenticate)
+                { 
+                    <a href="@Url.Content("~/InicialPage/Logoff")" class="btnPadrao" id="btnLogin">SAIR</a>
+                }
+                else
+                {
+                    <a href="@Url.Content("~/InicialPage/Logon")" class="btnPadrao" id="btnLogoff">LOGIN</a>
+                }
+            </div>
+        </article>
+        <div class="greenLine"></div>
+        <article id="divMenu" class="wrap" style="margin-top: 30px;">
+            <a href="@Url.Action("Index", "Home")">
+                <img id="AplicationLogo" src="../../Content/Images/AplicationLogo.png" title="VouJunto.com" alt="VouJunto.com" />
+            </a>
+
+            @Html.Partial(@menuView)
+
+        </article>
+    </header>
+    <section id="main" class="wrap">
+        <div id="renderBody">
+            @RenderBody()
+        </div>
+        <div id="messageError" class="messageErrorField" style="display: none">
+        </div>
+    </section>
+    <footer>
+        <div class="greenLine"></div>
+        <br />
+        <ul>
+
+        </ul>
+        <label>
+            Todos os direitos reservados a VouJunto.com ©
+            <script type="text/javascript">document.write(new Date().getFullYear());</script>
+        </label>
+    </footer>
+    <div id="darkBackground" class="fademe"></div>
+    <div id="popupWindow" class="popup"></div>
+</body>
+</html>
