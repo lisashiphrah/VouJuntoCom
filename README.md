@@ -13,3 +13,32 @@ and receive a financial compensation for it. Moreover, the system is integrated 
 allowing only the user’s contacts to have access to the rides offered by him, avoiding the insecurity 
 problem (when the users does not have the knowledge of who is in his car).
 </p>
+
+<p><i>Since this project was developer to a Brazilian University, all the pages were written in portuguese.</i><p/>
+
+<h3>1. Technical Information</h3>
+<ul>
+  <li>Developed using Visual Studio 2012;</li>
+  <li>ASP.NET MVC 3.0 Framework;</li>
+  <li>SQL Server Express database;</li>
+  <li>HTML5 and CSS3;</li>
+  <li>API Google Maps;</li>
+  <li>Integration with more then 300 social networks to share rides, such as Facebook, Twitter, Linkedin, Pinterest, MySpace and Google Plus;</li>
+  <li>MVC Architechture (Model-View-Controller)</li>
+</ul>
+
+<h3>2. Browsers Supported</h3>
+<ul>
+  <li>IE9 and IE8;</li>
+  <li>Firefox 3.5.x to 13;</li>
+  <li>Google Chrome 10 to 19;</li>
+  <li>Safari 4 e 5</li>
+</ul>
+
+<h3>3. Application Screenshots</h3>
+
+<img scr="Screen1.png"/>
+<img scr="Screen2.png"/>
+<img scr="Screen3.png"/>
+<img scr="Screen4.png"/>
+<img scr="Screen5.png"/>
