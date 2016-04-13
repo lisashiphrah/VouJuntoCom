@@ -1,14 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web;
+using System.Web; 
 
-namespace VouJuntoCom.DAO
+namespace VouJuntoCom.DAO 
 {
 	/// <summary>
 	/// Classe que representa a tabela BankAccount do banco
 	/// </summary>
-	public class UserBank
+	public class UserBank 
 	{
 		public Guid ID { get; set; }
 		public Guid BankID { get; set; }
