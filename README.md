@@ -3,7 +3,7 @@
 
 <p>VouJuntoCom is a social network developed by Cassia Almeida in 2012 where people can share rides with their 
 Facebook friends receiving money for it.</p>
-
+  
 <p>
 This application aims to reduce both the flow of vehicles and the emission of greenhouse gases 
 in the atmosphere through the development of a rides’ system. The system is based on buying and 
