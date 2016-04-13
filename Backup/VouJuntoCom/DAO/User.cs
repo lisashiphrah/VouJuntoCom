@@ -5,7 +5,7 @@ using System.Web;
 using VouJuntoCom.Models;
 using VouJuntoCom.Helpers;
 using System.Text;
-   
+      
 namespace VouJuntoCom.DAO
 {
 	/// <summary>
@@ -19,7 +19,7 @@ namespace VouJuntoCom.DAO
         public string FullName { get; set; }
         public string Username { get; set; }
         public string Password { get; set; }
-        public DateTime Birth { get; set; }
+        public DateTime Birth { get; set; }  
         public string CPF { get; set; }
         public string RG { get; set; }
         public string Email { get; set; }
